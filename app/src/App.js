@@ -1,13 +1,17 @@
 import './App.css';
-import React from 'react'
-import Home from './components/home'
-import Prueba from './components/prueba1'
+import React from 'react';
+import Home from './components/pages/Home';
+import Navbar from './components/navbar/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 const App = () => {
+  //Utilizamos switch para que renderize solo el componente con el path exacto
   return (
     <Router>
-        <Route path='/' exact component={Home}></Route>
-        <Route path='/abc' exact component={Prueba}></Route>
+      <Navbar/>
+      <Switch>
+          <Route path='/' exact component={Home}></Route>
+        </Switch>
     </Router>
   );
 }
