@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 
 function Copyright() {
-    textAlign();
+    //textAlign();
   return (
     <Typography variant="body2" color="textSecondary">
       {'Copyright © '}

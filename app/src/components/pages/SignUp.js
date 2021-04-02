@@ -1,5 +1,6 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import ButtonCustom from '../button/ButtonCustom.js';
@@ -53,11 +54,15 @@ const LogIn = () => {
 
   const [errorMail, setErrorMail] = React.useState(false);
 
+  const [errorName, setErrorName] = React.useState(false);
+
   const [errorPassword, setErrorPassword] = React.useState(false);
 
   const [failAuth, setFailAuth] = React.useState(false);
 
   const [mail, setMail] = React.useState("");
+
+  const [name, setName] = React.useState("");
 
   const [password, setPassword] = React.useState("");
 
@@ -69,6 +74,15 @@ const LogIn = () => {
       setErrorMail(true);
     } else {
       setErrorMail(false);//Color rojo de error
+    }
+  }
+
+  const onChangeName = (e) => {
+    setName(e.target.value); //Valor introducido en el text field
+    if (e.target.value === "") {
+      setErrorName(true);
+    } else {
+      setErrorName(false);
     }
   }
 
@@ -99,17 +113,7 @@ const LogIn = () => {
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs" >
-
-      {/*<Grid item xs={6}>
-            <Avatar className={classes.avatar}>
-              <MeetingRoomRoundedIcon />
-            </Avatar>
-            </Grid>*/}
-
-
       <form className={classes.form} noValidate>
-
-
         <Grid container
           spacing={3}
           direction="column"
@@ -118,13 +122,33 @@ const LogIn = () => {
         >
           <Grid item xs={12}>
             <Typography component="h1" variant="h3" className={classes.welcome}>
-              Welcome!
+              [Message]
               </Typography>
           </Grid>
         </Grid>
 
         <Grid item xs={12}>
           <Grid containter spacing={3} >
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="none"
+                required // TODO required???
+                size="large"
+                fullWidth="true"
+                id="name"
+                label="Nickname"
+                name="name"
+                autoComplete="name"
+                autoFocus
+                onChange={onChangeMail}
+                value={name}
+                error={errorMail || failAuth}
+                helperText={errorMail ? 'Enter your Email Address' : failAuth ? 'Email Address or Password Incorrect' : ' '}
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -162,6 +186,26 @@ const LogIn = () => {
                 helperText={errorMail ? 'Enter your Password' : failAuth ? 'Email Address or Password Incorrect' : ' '}
               />
             </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="none"
+                required
+                size="large"
+                fullWidth="true"
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={onChangePassword}
+                value={password}
+                error={errorPassword || failAuth}
+                helperText={errorMail ? 'Enter your Password' : failAuth ? 'Email Address or Password Incorrect' : ' '}
+              />
+            </Grid>
+
           </Grid>
         </Grid>
         <Grid item xs={12}>
@@ -184,25 +228,6 @@ const LogIn = () => {
           </Link>
         </Grid>
       </form>
-      {/*
-          <Grid container
-            spacing={2}
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >   
-            <Grid item xs={12}>
-              <ButtonCustom
-                fullWidth
-                buttonSize='btn--large'
-                onClick={handleLogin}
-                path="" // to??????
-              >
-                Login
-              </ButtonCustom>
-            </Grid>
-          </Grid>
-          */}
     </Container>
   );
 }
