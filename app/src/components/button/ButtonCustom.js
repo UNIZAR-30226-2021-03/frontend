@@ -1,9 +1,10 @@
 import React from 'react';
-import './Button.css';
+import './ButtonCustom.css';
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 const STYLES = [
-  'btn--primary', 
+  'btn--primary',
   'btn--secondary',
 ];
 
@@ -11,7 +12,7 @@ const SIZES = [
   'btn--medium',
   'btn--large'];
 
-export const Button = ({children,type,onClick,buttonStyle,buttonSize,path}) => {
+const ButtonCustom = ({ children, type, onClick, buttonStyle, buttonSize, path }) => {
 
   //Por defecto botones de estilo primarion y tamaño medio
   const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle : STYLES[0];
@@ -22,7 +23,7 @@ export const Button = ({children,type,onClick,buttonStyle,buttonSize,path}) => {
   return (
     <Link to={path} className='btn-mobile'>
       <button
-        className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+        className={`btn  ${checkButtonStyle} ${checkButtonSize}`}
         onClick={onClick}
         type={type}
       >
@@ -32,3 +33,4 @@ export const Button = ({children,type,onClick,buttonStyle,buttonSize,path}) => {
   );
 };
 
+export default ButtonCustom;

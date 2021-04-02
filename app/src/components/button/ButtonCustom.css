@@ -1,44 +1,45 @@
 :root {
-  --primary: #fff;
-  --secundary: #242424;
+  --primary: rgb(232, 238, 241);
+  --secundary: rgb(30,61,88);
 }
 
 .btn {
   padding: 8px 20px;
-  border-radius: 2px;
+  border-radius: 3px;
   outline: none;
   border: none;
   cursor: pointer;
+  /*justify-content: center;*/
+  /*align-content: center;*/
+  
 }
 
 .btn--primary {
   background-color: transparent;
-  color: rgb(0, 0, 0);
-  padding: 8px 20px;
-  border: 1px solid rgb(0, 0, 0);
+  color: rgb(30,61,88);
+  border: 1px solid rgb(30,61,88);
   transition: all 0.3s ease-out;
 }
 
 .btn--primary:hover {
+  background-color: rgb(5, 125, 205);
+  color: rgb(232, 238, 241);
   transition: all 0.3s ease-out;
-  background-color: rgb(248, 43, 122);
-  color: #ffffff;
-  border: 1px solid rgb(248, 43, 122);
+  border: 1px solid rgb(5, 125, 205);
 }
 
 .btn--secondary {
   background-color: transparent;
-  color: #fff;
-  padding: 8px 20px;
-  border: 1px solid var(--primary);
+  color: rgb(232, 238, 241);
+  border: 1px solid rgb(30,61,88);
   transition: all 0.3s ease-out;
 }
 
 .btn--secondary:hover {
-  transition: all 0.3s ease-out;
-  background: #fff;
-  color: #242424;
+  background: rgb(232, 238, 241);
+  color: rgb(30,61,88);
   transition: 250ms;
+  transition: all 0.3s ease-out;
 }
 
 .btn--medium {
