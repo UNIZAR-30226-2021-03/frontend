@@ -1,17 +1,32 @@
 export const NavbarItems = [
     {
-        title: 'Log-IN',
-        url: '/log-in',
-        cName: 'nav-links'
+        title: 'LOGIN',
+        url: '/login',
+        cName: 'nav-links',
+        showLoggedUser: false,
     },
     {
-        title: 'Sign-UP',
-        url: '/sign-up',
-        cName: 'nav-links2'
+        title: 'SIGNUP',
+        url: '/signup',
+        cName: 'nav-links',
+        showLoggedUser: false,
     },
     {
-      title: 'Sign-UP',
-      url: '/sign-up',
-      cName: 'nav-links-mobile'
-  }
+        title: 'LOGOUT',
+        url: '',
+        cName: 'nav-links',
+        showLoggedUser: true,
+        clickBehav: 'handleSignOut'
+    }
+    //,
+    //{
+    //    title: 'Sign-UP',
+    //    url: '/sign-up',
+    //    cName: 'nav-links2'
+    //},
+    //{
+    //  title: 'Sign-UP',
+    //  url: '/sign-up',
+    //  cName: 'nav-links-mobile' // no funciona
+    //}
 ]
