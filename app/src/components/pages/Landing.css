@@ -1,0 +1,14 @@
+.container {
+    /* The image used */
+    background-image: url(../../resources/key-1315566.jpg);
+
+    /* Full height */
+    height: 980px;
+    /*width: 100%; */
+    margin: 0;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+}

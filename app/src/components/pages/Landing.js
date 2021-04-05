@@ -1,7 +1,7 @@
-import { Box, Container, CssBaseline } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
+import './Landing.css';
 const useStyles = makeStyles((theme) => ({
 
 
@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    
     title: {
         fontSize: '50px',
         textAlign: 'center',
@@ -24,19 +25,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '30px',
         textAlign: 'center',
     },
-    /*
-    back: {
-        backgroundColor: 'none',
-        backgroundImage: keyImage,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        width: '100vw',
-        height: '100vh'
-    }
-    */
 }));
-
 /*
 const keyImage = require('../../resources/key-1315566.jpg');
 
@@ -54,16 +43,20 @@ const Landing = () => {
 
     return (
 
-        <Container component='main' maxWidth='xl' /*style={{ divStyle }}*/>
-            <Box component="div" className={classes.landingText}>
-                <Box component="div" className={classes.title}>
-                    KeyPaX
+        <div className='container'>
+            <Container component='div' maxWidth='xl' className={classes.container}>
+                <Box component="div" className={classes.landingText}>
+                    <Box component="div" className={classes.title}>
+                        KeyPaX
                 </Box>
-                <Box component="div" className={classes.description}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus. Molestie nunc non blandit massa. Mattis molestie a iaculis at erat. Dictum varius duis at consectetur lorem donec.
+                    <Box component="div" className={classes.description}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus. Molestie nunc non blandit massa. Mattis molestie a iaculis at erat. Dictum varius duis at consectetur lorem donec.
                 </Box>
-            </Box>
-        </Container>
+                </Box>
+                {/*
+            */}
+            </Container>
+        </div>
     )
 }
 
