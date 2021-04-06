@@ -6,10 +6,7 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 
 function Copyright() {
-<<<<<<< HEAD
-=======
   //textAlign();
->>>>>>> 8a6902a6dc410a4ee1cec37b31a9c8462fb8f540
   return (
     <Typography variant="body2" color="textSecondary">
       {'Copyright © '}
@@ -26,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-<<<<<<< HEAD
-    minHeight: '93vh',
-=======
     //minHeight: '0vh',
     position: 'fixed',
     padding: '0px',
@@ -38,17 +32,11 @@ const useStyles = makeStyles((theme) => ({
   main: {
     //marginTop: theme.spacing(8),
     marginBottom: theme.spacing(2),
->>>>>>> 8a6902a6dc410a4ee1cec37b31a9c8462fb8f540
   },
   footer: {
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
-<<<<<<< HEAD
-    fontSize: '20px',
-    backgroundColor: 'rgb(30,61,88)',
-=======
     backgroundColor: 'rgb(232, 238, 241)'
->>>>>>> 8a6902a6dc410a4ee1cec37b31a9c8462fb8f540
   },
 }));
 
@@ -57,12 +45,8 @@ export default function StickyFooter() {
 
   return (
     <div className={classes.root}>
-<<<<<<< HEAD
-      <CssBaseline />
-=======
       <Container component="main" className={classes.main} maxWidth="sm">
       </Container>
->>>>>>> 8a6902a6dc410a4ee1cec37b31a9c8462fb8f540
       <footer className={classes.footer}>
         <Container maxWidth="sm">
           <Typography variant="body1">My sticky footer can be found here.</Typography>
