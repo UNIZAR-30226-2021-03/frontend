@@ -7,7 +7,6 @@ import Landing from './components/pages/Landing';
 import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/Footer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { FormHelperText } from '@material-ui/core';
 
 const App = () => {
   //Utilizamos switch para que renderize solo el componente con el path exacto

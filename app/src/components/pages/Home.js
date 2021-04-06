@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import prueba from '../../services/prueba'
-import { Container, CssBaseline } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 
 
 const Home = () => {

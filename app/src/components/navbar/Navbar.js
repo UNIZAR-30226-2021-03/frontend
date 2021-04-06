@@ -7,11 +7,13 @@ import './Navbar.css';
 //Fas fa-times y fa-bars iconos exportados desde fontawesome, ver index.html
 //Línea 20 alterna la vista del ícono en función de si el menú esta abierto o no.
 
+// TODO navbar en modviles pequeños (cambiar a mejor)
+
 function Navbar() {
 
   const [clicked, setClicked] = useState(false);
   const handleClick = () => setClicked(!clicked);
-  const closeMobileMenu = () => setClicked(false);
+  //const closeMobileMenu = () => setClicked(false);
 
   const [userLogged, setUserLogged] = useState(false);
 
@@ -22,8 +24,6 @@ function Navbar() {
   return (
     <>
       <nav className='navbar'>
-
-
         <Link to='/' className="navbar-logo" onClick={handleTest}>
           <i class="fas fa-key navbar-logo-icon"></i>
           <div className="navbar-logo-name">
@@ -31,15 +31,14 @@ function Navbar() {
           </div>
         </Link>
 
-
         <div className='menu-icon' onClick={handleClick}>
           <i className={clicked ? 'fas fa-times' : 'fas fa-bars'} />
         </div>
 
         <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
           {NavbarItems.map((item, index) => {
-            if (item.showLoggedUser == userLogged) {
-              if (item.url == '' && item.clickBehav == 'handleSignOut') {
+            if (item.showLoggedUser === userLogged) {
+              if (item.url === '' && item.clickBehav === 'handleSignOut') {
                 return (
                   <li>
                     <a className={item.cName} href={'/'} onClick={handleSignOut}>
@@ -56,21 +55,11 @@ function Navbar() {
                   </li>
                 )
               }
+            } else {
+              return
             }
           })}
         </ul>
-
-        {/** 
-          <Button
-            className='nav-links'
-            buttonStyle='btn--secondary'
-            buttonSize='btn--large'
-            path='/sign-up'
-          >
-            Sign-UP
-        </Button>
-          */}
-
       </nav>
     </>
   );

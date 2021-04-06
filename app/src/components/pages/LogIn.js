@@ -1,14 +1,12 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import ButtonCustom from '../button/ButtonCustom.js';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import MeetingRoomRoundedIcon from '@material-ui/icons/MeetingRoomRounded';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import login from '../../services/Login.service.js';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -25,12 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     textTransform: "none",
-    padding: '12px 26px',
     fontSize: '20px',
     padding: '8px 20px',
     borderRadius: '3px',
     outline: 'none',
-    border: 'none',
     cursor: 'pointer',
     justifyContent: 'center',
     alignItems: 'center',
@@ -55,7 +51,9 @@ const LogIn = () => {
 
   const [errorPassword, setErrorPassword] = React.useState(false);
 
-  const [failAuth, setFailAuth] = React.useState(false);
+  const [failAuthEmail, setFailAuthEmail] = React.useState(false);
+
+  const [failAuthPassword, setFailAuthPassword] = React.useState(false);
 
   const [mail, setMail] = React.useState("");
 
@@ -64,51 +62,46 @@ const LogIn = () => {
   const emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   const onChangeMail = (e) => {
-    setMail(e.target.value); //Valor introducido en el text field
-    if (!emailRegEx.test(e.target.value)) { //Es un email?
+    setMail(e.target.value);
+    if (!emailRegEx.test(e.target.value)) { // TODO alguna comprobación más ?
       setErrorMail(true);
     } else {
-      setErrorMail(false);//Color rojo de error
+      setErrorMail(false);
     }
   }
 
   const onChangePassword = (e) => {
     setPassword(e.target.value);
-    if (e.target.value === "") { //No se permite contraseña vacía
+    if (e.target.value === "") { // TODO alguna comprobación más ?
       setErrorPassword(true);
     } else {
       setErrorPassword(false);
     }
   }
 
-  const handleLogin = () => { //Función que se ejecuta cuando click login
-    var noErrors = true;
-    if (!emailRegEx.test(mail)) {
-      setErrorMail(true);
-      noErrors = false;
-    }
-    if (password === "") {
-      setErrorPassword(true);
-      noErrors = false;
-    }
-    if (noErrors) { //Si no hay errores con los datos introducidos procedemos a log-in
-      //Puede renderizarse una animación mientras se hace la petición...
-      setFailAuth(true); //Pongo failauth a true como si no se hubiese podido autenticar
+  const handleLogin = () => {
+    if(errorPassword || errorMail) { // TODO alguna comprobación más ?      
+      console.log("ERROR")
+    } else {
+      // Si no hay errores con los datos introducidos procedemos a log-in
+      // TODO Puede renderizarse una animación mientras se hace la petición...
+      // TODO realizar petición
+      console.log("HOLA HOAL")
+      login()
+      .then( res => {
+        console.log(res)
+      })
+      .catch( err => {
+        console.log("Errrorrrrr")
+      })
+      // TODO comprobar errores de peticion
     }
   }
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs" >
 
-      {/*<Grid item xs={6}>
-            <Avatar className={classes.avatar}>
-              <MeetingRoomRoundedIcon />
-            </Avatar>
-            </Grid>*/}
-
-
       <form className={classes.form} noValidate>
-
 
         <Grid container
           spacing={3}
@@ -139,8 +132,8 @@ const LogIn = () => {
                 autoFocus
                 onChange={onChangeMail}
                 value={mail}
-                error={errorMail || failAuth}
-                helperText={errorMail ? 'Enter your Email Address' : failAuth ? 'Email Address or Password Incorrect' : ' '}
+                error={errorMail || failAuthEmail}
+                helperText={errorMail ? 'Enter a valid Email Address' : failAuthEmail ? 'Email Address is Incorrect' : ' '}
               />
             </Grid>
 
@@ -158,16 +151,17 @@ const LogIn = () => {
                 autoComplete="current-password"
                 onChange={onChangePassword}
                 value={password}
-                error={errorPassword || failAuth}
-                helperText={errorMail ? 'Enter your Password' : failAuth ? 'Email Address or Password Incorrect' : ' '}
+                error={errorPassword || failAuthPassword}
+                helperText={errorMail ? 'Enter your Password' : failAuthPassword ? 'Password is Incorrect' : ' '}
               />
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <Button
+            onClick={handleLogin}
             className={classes.submit}
-            fullWidth
+            fullWidth="true"
             type="submit"
           >
             Log in
@@ -184,25 +178,6 @@ const LogIn = () => {
           </Link>
         </Grid>
       </form>
-      {/*
-          <Grid container
-            spacing={2}
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >   
-            <Grid item xs={12}>
-              <ButtonCustom
-                fullWidth
-                buttonSize='btn--large'
-                onClick={handleLogin}
-                path="" // to??????
-              >
-                Login
-              </ButtonCustom>
-            </Grid>
-          </Grid>
-          */}
     </Container>
   );
 }
