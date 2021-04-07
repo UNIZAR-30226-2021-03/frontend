@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import sendSignUp from '../../services/SignUp.service';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -68,11 +69,11 @@ const LogIn = () => {
 
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
 
-  const emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  const mailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   const onChangeMail = (e) => {
     setMail(e.target.value);
-    if (!emailRegEx.test(e.target.value)) { // TODO alguna comprobación más
+    if (!mailRegEx.test(e.target.value)) { // TODO alguna comprobación más
       setErrorMail(true);
     } else {
       setErrorMail(false);
@@ -111,6 +112,48 @@ const LogIn = () => {
     }
   }
 
+  const handleSignUp = () => {
+    var noErrors = true
+
+    if (!mailRegEx.test(mail)) { // TODO alguna comprobación más
+      setErrorMail(true)
+      noErrors = false
+    }
+    if (name === "") {
+      setErrorName(true)
+      noErrors = false
+    }
+    if (password === "") {
+      setErrorPassword(true)
+      noErrors = false
+    }
+    if (passwordConfirm !== password) {
+      setErrorPasswordConfirm(true)
+      noErrors = false
+    }
+    if (noErrors) {
+      // Si no hay errores con los datos introducidos procedemos a log-in
+      // TODO Puede renderizarse una animación mientras se hace la petición...
+      // TODO realizar petición
+
+      const response = sendSignUp(name, mail, password)
+        .then(response => {
+          // TODO modificar errores visuales dependiendo del código de error
+          // TODO que pasa si es un codigo de erro no conocido
+          if (response === 400) { // no se cumplen los requirements 
+            console.log("--- ERROR " + response + ": !")
+          } else if (response === 409) {
+            console.log("--- ERROR " + response + ": !")
+          } else if (response === 500) {
+            console.log("--- ERROR " + response + ": !")
+          } else if (response === 501) {
+            console.log("--- ERROR " + response + ": !")
+          } else {
+            // TODO signup correcto
+          }
+        })
+    }
+  }
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs" >
@@ -168,7 +211,7 @@ const LogIn = () => {
                 value={mail}
                 error={errorMail || failAuthEmail}
                 helperText={errorMail ? 'Enter a valid Email Address' : failAuthEmail ? 'Email Address Incorrect' : ' '}
-                // TODO email address is already in use
+              // TODO email address is already in use
               />
             </Grid>
 
@@ -217,9 +260,11 @@ const LogIn = () => {
           <Button
             className={classes.submit}
             fullWidth
-            type="submit"
+            onClick={handleSignUp}
+          // TODO submit????
+          //type="submit"
           >
-            Log in
+            Sign up
             </Button>
         </Grid>
       </form>
