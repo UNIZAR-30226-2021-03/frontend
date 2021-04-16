@@ -6,12 +6,12 @@ FROM node as build
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 # ENV PATH  ?
-COPY ./package.json /usr/src/app/package.json
+COPY ./app/package.json /usr/src/app/package.json
 #RUN npm install react-scripts -g --silent
 # da error CRITICAL a veces si a veces no
 RUN npm install -g npm@7.9.0
 RUN npm install --silent
-COPY . /usr/src/app
+COPY ./app /usr/src/app
 RUN ls /usr/src/app
 #RUN rm /usr/src/app/package-lock.json
 RUN ls /usr/src/app
