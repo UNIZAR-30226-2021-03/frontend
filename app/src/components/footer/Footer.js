@@ -1,7 +1,7 @@
 //https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sticky-footer/StickyFooter.js
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -35,55 +35,63 @@ export default function StickyFooter() {
   return (
     <Container className={classes.container} component="main" maxWidht="xs">
       <form className={classes.form} noValidate></form>
-      <Grid container
-          spacing={0}
-          direction="column"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Grid item xs={12}>
-            hola11
+      <Grid container>
+        <Grid item xs={4}>
+          <Grid container
+            spacing={0}
+            direction="column"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            <Grid item xs={12}>
+              hola11
           </Grid>
-          <Grid item xs={12}>
-            hola21
+            <Grid item xs={12}>
+              hola21
           </Grid>
-          <Grid item xs={12}>
-            hola31
+            <Grid item xs={12}>
+              hola31
           </Grid>
-      </Grid>
-      <Grid container
-          spacing={0}
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-        <Grid item xs={12}>
-            hola12
           </Grid>
-          <Grid item xs={12}>
-            hola22
+        </Grid>
+        <Grid item xs={4}>
+          <Grid container
+            spacing={0}
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item xs={12}>
+              hola12
           </Grid>
-          <Grid item xs={12}>
-            hola32
+            <Grid item xs={12}>
+              hola22
           </Grid>
-      </Grid>
-      <Grid container
-          spacing={0}
-          direction="column"
-          justify="flex-end"
-          alignItems="flex-end"
-        >
-        <Grid item xs={12}>
-            hola13
+            <Grid item xs={12}>
+              hola32
           </Grid>
-          <Grid item xs={12}>
-            hola23
           </Grid>
-          <Grid item xs={12}>
-            hola24
+        </Grid>
+        <Grid item xs={4}>
+
+          <Grid container
+            spacing={0}
+            direction="column"
+            justify="flex-end"
+            alignItems="flex-end"
+          >
+            <Grid item xs={12}>
+              hola13
           </Grid>
-      </Grid>
-      <Grid container
+            <Grid item xs={12}>
+              hola23
+          </Grid>
+            <Grid item xs={12}>
+              hola24
+          </Grid>
+          </Grid>
+        </Grid>
+        <Grid container
           spacing={0}
           direction="column"
           justify="flex-end"
@@ -92,6 +100,7 @@ export default function StickyFooter() {
           <Grid item xs={12}>
             Bárbaros Software S.A. 2021
           </Grid>
+        </Grid>
       </Grid>
     </Container>
   );
