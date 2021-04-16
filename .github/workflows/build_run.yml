@@ -3,7 +3,7 @@ name: Build and Run
 on:
   push: # Triggers the workflow on push events in any branch
     branches:
-      - main
+  #    - main
   #    - desarrollo
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -43,7 +43,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
-        password: ${{ secrets.RWD_packages }} 
+        password: ${{ secrets.KEYPAX_PAT }} 
     - name: Build and Push BE-container         #IMAGEN DE CONTENEDOR DE BACKEND
       uses: docker/build-push-action@v2
       with:
