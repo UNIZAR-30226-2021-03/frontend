@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  frontend:
+    image: ghcr.io/unizar-30226-2021-03/frontend/keypax-react-app:v2
+    networks:
+      - frontend-net
+  nginx-proxy:
+    image: ghcr.io/unizar-30226-2021-03/frontend/nginx:stable 
+    environment:
+      - CERTBOT_EMAIL=${email}
+    volumes:
+      - nginx_secrets:/etc/letsencrypt
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - frontend-net
+    depends_on:
+      - frontend  
+networks:
+  frontend-net:
+    driver: bridge
+volumes:
+  nginx_secrets:
