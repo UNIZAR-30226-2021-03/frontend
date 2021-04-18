@@ -60,7 +60,6 @@ const Landing = () => {
 
     return (
 
-
         <Container component='div' maxWidth='xl' className={classes.container}>
             <Box component="div" className={classes.landingText}>
                 <Box component="div" className={classes.title}>

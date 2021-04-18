@@ -11,20 +11,24 @@ import './Navbar.css';
 
 function Navbar() {
 
+  // TODO se necesita un estado disponible desde todas partes para indicar si el usuario esta logeado?
   const [clicked, setClicked] = useState(false);
   const handleClick = () => setClicked(!clicked);
   //const closeMobileMenu = () => setClicked(false);
 
   const [userLogged, setUserLogged] = useState(false);
 
-  const handleTest = () => setUserLogged(true);
+  //const handleTest = () => setUserLogged(true);
 
   const handleSignOut = () => setUserLogged(false);
+
+  const mainLink = userLogged ? '/home' : '/'
 
   return (
     <>
       <nav className='navbar'>
-        <Link to='/' className="navbar-logo" onClick={handleTest}>
+
+        <Link to={mainLink} className="navbar-logo">
           <i class="fas fa-key navbar-logo-icon"></i>
           <div className="navbar-logo-name">
             KeyPaX
@@ -56,7 +60,7 @@ function Navbar() {
                 )
               }
             } else {
-              return
+              return (<></>)
             }
           })}
         </ul>

@@ -112,7 +112,7 @@ const LogIn = () => {
     }
   }
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     var noErrors = true
 
     if (!mailRegEx.test(mail)) { // TODO alguna comprobación más
@@ -136,25 +136,22 @@ const LogIn = () => {
       // TODO Puede renderizarse una animación mientras se hace la petición...
       // TODO realizar petición
 
-      const response = sendSignUp(name, mail, password)
-        .then(response => {
-          // TODO modificar errores visuales dependiendo del código de error
-          // TODO que pasa si es un codigo de erro no conocido
-          if (response === 400) { // no se cumplen los requirements 
-            console.log("--- ERROR " + response + ": !")
-          } else if (response === 409) {
-            console.log("--- ERROR " + response + ": !")
-          } else if (response === 500) {
-            console.log("--- ERROR " + response + ": !")
-          } else if (response === 501) {
-            console.log("--- ERROR " + response + ": !")
-          } else {
-            // TODO signup correcto
-          }
-        })
+      const response = await sendSignUp(name, mail, password)
+      // TODO modificar errores visuales dependiendo del código de error
+      // TODO que pasa si es un codigo de erro no conocido
+      if (response === 400) { // no se cumplen los requirements 
+        console.log("--- ERROR " + response + ": !")
+      } else if (response === 409) {
+        console.log("--- ERROR " + response + ": !")
+      } else if (response === 500) {
+        console.log("--- ERROR " + response + ": !")
+      } else if (response === 501) {
+        console.log("--- ERROR " + response + ": !")
+      } else {
+        // TODO signup correcto
+      }
     }
   }
-
   return (
     <Container className={classes.container} component="main" maxWidth="xs" >
       <form className={classes.form} noValidate>

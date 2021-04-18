@@ -7,6 +7,8 @@ const sendSignUp = async (nickname, email, password) => {
         const response = await axios.post(Routes.URL_SIGNUP, body)
         return response.data
     } catch (error) {
+        console.log(error)
+        //return error
         return error.response.status
     }
 }

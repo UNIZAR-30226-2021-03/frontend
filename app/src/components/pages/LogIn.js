@@ -138,10 +138,24 @@ const LogIn = () => {
     }
   }
 
-  const handle2FA = () => {
+  const handle2FA = async () => {
     // TODO implementar numero de intentos para introducir correctamente el codigo (por ahora infinitas)
     console.log(loginToken)
 
+    const response = await send2FA(loginToken, code2FA)
+    if (response === 401) {
+      console.log("--- ERROR " + response + ": !")
+      setFailAuth2FA(true)
+    } else {
+      // TODO guardar el token de acceso
+      localStorage.setItem("accessToken", response.accessToken)
+      console.log(localStorage.getItem("accessToken"))
+      setOpen2FA(false)
+    }
+    setCode2FA("")
+
+
+    /*
     const response = send2FA(loginToken, code2FA)
       .then(response => {
         if (response === 401) {
@@ -155,6 +169,7 @@ const LogIn = () => {
         }
         setCode2FA("")
       })
+      */
   }
 
   return (
@@ -183,7 +198,7 @@ const LogIn = () => {
                 margin="none"
                 required
                 size="large"
-                fullWidth="true"
+                fullWidth={true}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -202,7 +217,7 @@ const LogIn = () => {
                 margin="none"
                 required
                 size="large"
-                fullWidth="true"
+                fullWidth={true}
                 name="password"
                 label="Password"
                 type="password"
@@ -220,7 +235,7 @@ const LogIn = () => {
           <Button
             onClick={handleLogIn}
             className={classes.submit}
-            fullWidth="true"
+            fullWidth={true}
           //type="submit"
           >
             Log in
@@ -249,10 +264,11 @@ const LogIn = () => {
             margin="none"
             label="Código"
             type="password"
-            fullWidth="true"
+            fullWidth={true}
             required
             size="large"
             name="code2FA"
+            autoComplete="off"
             //id="code2FA"
             onChange={onChangeCode2FA}
             value={code2FA}
@@ -261,7 +277,7 @@ const LogIn = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handle2FA} color="primary" fullWidth="true">
+          <Button onClick={handle2FA} color="primary" fullWidth={true}>
             Enviar
           </Button>
         </DialogActions>
