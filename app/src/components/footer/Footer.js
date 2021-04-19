@@ -10,8 +10,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
     backgroundColor: 'rgb(30, 61, 88)',
-    color: 'rgb(232, 238, 241)',
-    bottom: 0
+    color: 'rgb(232, 238, 241)'
   },
 }));
 
@@ -19,7 +18,7 @@ export default function StickyFooter() {
   const classes = useStyles();
 
   return (
-    <Container className={classes.container} component="main" maxWidht="xs">
+    <Container fixed className={classes.container} component="main" maxWidht="ms">
       <form className={classes.form} noValidate></form>
       <Grid container spacing={4}>
         <Grid item xs={4}>

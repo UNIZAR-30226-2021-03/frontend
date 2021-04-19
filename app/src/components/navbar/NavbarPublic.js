@@ -8,7 +8,7 @@ import AuthContext from '../../context'
 //Fas fa-times y fa-bars iconos exportados desde fontawesome, ver index.html
 //Línea 20 alterna la vista del ícono en función de si el menú esta abierto o no.
 
-// TODO navbar en modviles pequeños (cambiar a mejor)
+// TODO navbar en moviles pequeños (cambiar a mejor)
 
 const Navbar = (props) => {
 
