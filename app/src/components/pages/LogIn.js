@@ -14,6 +14,8 @@ import Container from '@material-ui/core/Container';
 import sendLogIn from '../../services/LogIn.service.js';
 import send2FA from '../../services/2FA.service.js';
 import AuthContext from '../../context'
+import { useHistory } from "react-router-dom"
+//import { Redirect } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -52,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LogIn = () => {
+
+  const history = useHistory(); // Redirection
 
   const { logInToken } = useContext(AuthContext)
 
@@ -155,11 +159,10 @@ const LogIn = () => {
       // TODO informar al usuario del error
       setFailAuth2FA(true)
     } else if (response.status === 200) {
-      // TODO guardar el token de acceso
       logInToken(response.data.accessToken)
       setOpen2FA(false)
-      //window.location.reload();
-      // TODO redirigir a home
+      console.log('Redirecting to home...')
+      history.push('/home')
     } else {
       // TODO network error
     }
