@@ -3,19 +3,19 @@ export const NavbarItems = [
         title: 'LOGIN',
         url: '/login',
         cName: 'nav-links',
-        showLoggedUser: false,
+        private: false,
     },
     {
         title: 'SIGNUP',
         url: '/signup',
         cName: 'nav-links',
-        showLoggedUser: false,
+        private: false,
     },
     {
         title: 'LOGOUT',
         url: '',
         cName: 'nav-links',
-        showLoggedUser: true,
+        private: true,
         clickBehav: 'handleSignOut'
     }
     //,

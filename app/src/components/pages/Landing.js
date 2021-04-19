@@ -40,7 +40,9 @@ const useStyles = makeStyles((theme) => ({
         /* Center and scale the image nicely */
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
+
+        flex:'1'
     }
 }));
 /*
@@ -60,7 +62,7 @@ const Landing = () => {
 
     return (
 
-        <Container component='div' maxWidth='xl' className={classes.container}>
+        <Container component='div' maxWidth='xl' className='container'>
             <Box component="div" className={classes.landingText}>
                 <Box component="div" className={classes.title}>
                     KeyPaX

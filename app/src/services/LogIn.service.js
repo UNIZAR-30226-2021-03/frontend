@@ -7,12 +7,16 @@ const sendLogIn = async (email, password) => {
         const body = { email, password }
         const response = await axios.post(Routes.URL_LOGIN, body)
         console.log("--- CODE " + response.status + ": !")
-        return response.data
+        return {
+            status: response.status,
+            data: response.data,
+        }
     }
     catch (error) {
         console.log(error)
-        return error
-        //return error.response.status
+        return {
+            status: error.response.status,
+        }
     }
 }
 

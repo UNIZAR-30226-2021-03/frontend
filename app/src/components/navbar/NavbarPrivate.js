@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
 import { NavbarItems } from './NavbarItems';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import AuthContext from '../../context'
 
 //Navbar con menú para vista desde web browser móvil:
 //Fas fa-times y fa-bars iconos exportados desde fontawesome, ver index.html
@@ -9,7 +10,7 @@ import './Navbar.css';
 
 // TODO navbar en modviles pequeños (cambiar a mejor)
 
-function Navbar() {
+const Navbar = (props) => {
 
   // TODO se necesita un estado disponible desde todas partes para indicar si el usuario esta logeado?
   const [clicked, setClicked] = useState(false);
@@ -18,9 +19,11 @@ function Navbar() {
 
   const [userLogged, setUserLogged] = useState(false);
 
-  //const handleTest = () => setUserLogged(true);
+  const {signOutToken} = useContext(AuthContext) 
 
-  const handleSignOut = () => setUserLogged(false);
+  const handleSignOut = () => {
+    signOutToken()
+  };
 
   const mainLink = userLogged ? '/home' : '/'
 
@@ -41,24 +44,14 @@ function Navbar() {
 
         <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
           {NavbarItems.map((item, index) => {
-            if (item.showLoggedUser === userLogged) {
-              if (item.url === '' && item.clickBehav === 'handleSignOut') {
+            if (item.private === true) {
                 return (
                   <li>
-                    <a className={item.cName} href={'/'} onClick={handleSignOut}>
-                      {item.title}
-                    </a>
+                    <Link className="nav-links" to={'/'} onClick={handleSignOut}>
+                      LOGOUT
+                    </Link>
                   </li>
                 )
-              } else {
-                return (
-                  <li>
-                    <a className={item.cName} href={item.url}>
-                      {item.title}
-                    </a>
-                  </li>
-                )
-              }
             } else {
               return (<></>)
             }

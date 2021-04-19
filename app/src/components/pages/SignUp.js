@@ -134,21 +134,22 @@ const LogIn = () => {
     if (noErrors) {
       // Si no hay errores con los datos introducidos procedemos a log-in
       // TODO Puede renderizarse una animación mientras se hace la petición...
-      // TODO realizar petición
 
       const response = await sendSignUp(name, mail, password)
       // TODO modificar errores visuales dependiendo del código de error
       // TODO que pasa si es un codigo de erro no conocido
-      if (response === 400) { // no se cumplen los requirements 
-        console.log("--- ERROR " + response + ": !")
-      } else if (response === 409) {
-        console.log("--- ERROR " + response + ": !")
-      } else if (response === 500) {
-        console.log("--- ERROR " + response + ": !")
-      } else if (response === 501) {
-        console.log("--- ERROR " + response + ": !")
-      } else {
+      if (response.status === 400) { // no se cumplen los requirements 
+        console.log("--- ERROR " + response.status + ": !")
+      } else if (response.status === 409) {
+        console.log("--- ERROR " + response.status + ": !")
+      } else if (response.status === 500) {
+        console.log("--- ERROR " + response.status + ": !")
+      } else if (response.status === 501) {
+        console.log("--- ERROR " + response.status + ": !")
+      } else if (response.status === 200) {
         // TODO signup correcto
+      } else {
+        // TODO network erorr????
       }
     }
   }

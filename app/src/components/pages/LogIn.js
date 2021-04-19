@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import sendLogIn from '../../services/LogIn.service.js';
 import send2FA from '../../services/2FA.service.js';
+import AuthContext from '../../context'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -51,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LogIn = () => {
+
+  const { logInToken } = useContext(AuthContext)
+
   const classes = useStyles();
 
   const [errorMail, setErrorMail] = React.useState(false);
@@ -93,12 +97,12 @@ const LogIn = () => {
     }
   }
 
-  const onChangeCode2FA = (e) => {
+  const onChangeCode2FA = (e) => { // TODO ERROR: que pasa si no se introduce codigo de 6 cifras
     setFailAuth2FA(false)
     setCode2FA(e.target.value);
   }
 
-  const handleLogIn = () => {
+  const handleLogIn = async () => {
     var noErrors = true
     if (!mailRegEx.test(mail)) { // TODO alguna comprobación más
       setErrorMail(true)
@@ -112,29 +116,32 @@ const LogIn = () => {
       // Si no hay errores con los datos introducidos procedemos a log-in
       // TODO Puede renderizarse una animación mientras se hace la petición...
       // TODO realizar petición
-      const response = sendLogIn(mail, password)
-        .then(response => {
-          // TODO modificar errores visuales dependiendo del código de error
-          // TODO que pasa si es un codigo de erro no conocido
-          if (response === 400) { // no se cumplen los requirements 
-            console.log("--- ERROR " + response + ": !")
-          } else if (response === 401) {
-            console.log("--- ERROR " + response + ": !")
-          } else if (response === 404) {
-            console.log("--- ERROR " + response + ": !")
-          } else if (response === 500) {
-            console.log("--- ERROR " + response + ": !")
-          } else if (response === 501) {
-            console.log("--- ERROR " + response + ": !")
-          } else {
-            setLoginToken(response._2faToken)
-            //console.log(response._2faToken)
-            //console.log(response)
-            //console.log(loginToken)
-            setOpen2FA(true)
-          }
-        })
-      // TODO comprobar errores de peticion
+      const response = await sendLogIn(mail, password)
+      // TODO modificar errores visuales dependiendo del código de error
+      // TODO que pasa si es un codigo de erro no conocido
+      if (response.status === 400) { // no se cumplen los requirements 
+        console.log("--- ERROR " + response.status + ": !")
+      // TODO informar al usuario del error
+      } else if (response.status === 401) {
+        console.log("--- ERROR " + response.status + ": !")
+      // TODO informar al usuario del error
+      } else if (response.status === 404) {
+        console.log("--- ERROR " + response.status + ": !")
+      // TODO informar al usuario del error
+      } else if (response.status === 500) {
+        console.log("--- ERROR " + response.status + ": !")
+      // TODO informar al usuario del error
+      } else if (response.status === 501) {
+        console.log("--- ERROR " + response.status + ": !")
+      // TODO informar al usuario del error
+      } else if (response.status === 200) {
+        console.log()
+        // TODO sin conexion se sigue abriendo el dialog, cambiar codigo de errores
+        setLoginToken(response.data._2faToken)
+        setOpen2FA(true)
+      } else {
+        // TODO error en network ??????
+      }
     }
   }
 
@@ -143,33 +150,20 @@ const LogIn = () => {
     console.log(loginToken)
 
     const response = await send2FA(loginToken, code2FA)
-    if (response === 401) {
-      console.log("--- ERROR " + response + ": !")
+    if (response.status === 401) {
+      console.log("--- ERROR " + response.status + ": !")
+      // TODO informar al usuario del error
       setFailAuth2FA(true)
-    } else {
+    } else if (response.status === 200) {
       // TODO guardar el token de acceso
-      localStorage.setItem("accessToken", response.accessToken)
-      console.log(localStorage.getItem("accessToken"))
+      logInToken(response.data.accessToken)
       setOpen2FA(false)
+      //window.location.reload();
+      // TODO redirigir a home
+    } else {
+      // TODO network error
     }
     setCode2FA("")
-
-
-    /*
-    const response = send2FA(loginToken, code2FA)
-      .then(response => {
-        if (response === 401) {
-          console.log("--- ERROR " + response + ": !")
-          setFailAuth2FA(true)
-        } else {
-          // TODO guardar el token de acceso
-          localStorage.setItem("accessToken", response.accessToken)
-          console.log(localStorage.getItem("accessToken"))
-          setOpen2FA(false)
-        }
-        setCode2FA("")
-      })
-      */
   }
 
   return (

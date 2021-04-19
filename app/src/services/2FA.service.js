@@ -6,10 +6,15 @@ const send2FA = async (_2faToken, code) => {
         const body = { _2faToken, code }
         const response = await axios.post(Routes.URL_2FA, body)
         console.log("--- CODE " + response.status + ": !")
-        return response.data
+        return {
+            status: response.status,
+            data: response.data,
+        }
     }
     catch (error) {     
-        return error.response.status
+        return {
+            status: error.response.status,
+        }
     }
 }
 
