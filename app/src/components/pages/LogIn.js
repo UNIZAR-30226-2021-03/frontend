@@ -125,19 +125,21 @@ const LogIn = () => {
       // TODO que pasa si es un codigo de erro no conocido
       if (response.status === 400) { // no se cumplen los requirements 
         console.log("--- ERROR " + response.status + ": !")
-      // TODO informar al usuario del error
+        // TODO informar al usuario del error
       } else if (response.status === 401) {
         console.log("--- ERROR " + response.status + ": !")
-      // TODO informar al usuario del error
+        // TODO informar al usuario del error
+        setFailAuthPassword(true)
       } else if (response.status === 404) {
         console.log("--- ERROR " + response.status + ": !")
-      // TODO informar al usuario del error
+        // TODO informar al usuario del error
+        setFailAuthEmail(true)
       } else if (response.status === 500) {
         console.log("--- ERROR " + response.status + ": !")
-      // TODO informar al usuario del error
+        // TODO informar al usuario del error
       } else if (response.status === 501) {
         console.log("--- ERROR " + response.status + ": !")
-      // TODO informar al usuario del error
+        // TODO informar al usuario del error
       } else if (response.status === 200) {
         console.log()
         // TODO sin conexion se sigue abriendo el dialog, cambiar codigo de errores
@@ -188,23 +190,23 @@ const LogIn = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Grid containter spacing={3} >
+          <Grid containter="true" >
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="none"
                 required
-                size="large"
+                size="medium"
                 fullWidth={true}
                 id="email"
-                label="Email Address"
+                label="Correo electrónico"
                 name="email"
                 autoComplete="email"
                 autoFocus
                 onChange={onChangeMail}
                 value={mail}
                 error={errorMail || failAuthEmail}
-                helperText={errorMail ? 'Enter a valid Email Address' : failAuthEmail ? 'Email Address is Incorrect' : ' '}
+                helperText={errorMail ? 'Introduce una dirección válida' : failAuthEmail ? 'El usuario no existe o no esta verificado' : ' '}
               />
             </Grid>
 
@@ -213,17 +215,17 @@ const LogIn = () => {
                 variant="outlined"
                 margin="none"
                 required
-                size="large"
+                size="medium"
                 fullWidth={true}
                 name="password"
-                label="Password"
+                label="Contraseña"
                 type="password"
                 id="password"
                 autoComplete="current-password"
                 onChange={onChangePassword}
                 value={password}
                 error={errorPassword || failAuthPassword}
-                helperText={errorMail ? 'Enter your Password' : failAuthPassword ? 'Password is Incorrect' : ' '}
+                helperText={errorMail ? 'Intorduce la contraseña' : failAuthPassword ? 'La contraseña es incorrecta' : ' '}
               />
             </Grid>
           </Grid>
@@ -251,7 +253,7 @@ const LogIn = () => {
       </form>
 
       <Dialog open={open2FA} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">2FA Verification Code</DialogTitle>
+        <DialogTitle id="form-dialog-title">Coódigo de Verificación 2FA</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Por favor, introduzca el código de verificación enviado a: {mail}
@@ -263,14 +265,14 @@ const LogIn = () => {
             type="password"
             fullWidth={true}
             required
-            size="large"
+            size="medium"
             name="code2FA"
             autoComplete="off"
             //id="code2FA"
             onChange={onChangeCode2FA}
             value={code2FA}
             error={failAuth2FA}
-            helperText={failAuth2FA ? 'Code is incorrect' : ' '}
+            helperText={failAuth2FA ? 'Código de verificación incorrecto' : ' '}
           />
         </DialogContent>
         <DialogActions>

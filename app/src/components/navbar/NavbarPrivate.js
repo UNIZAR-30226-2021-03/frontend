@@ -1,4 +1,4 @@
-import React, { useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { NavbarItems } from './NavbarItems';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
@@ -8,31 +8,28 @@ import AuthContext from '../../context'
 //Fas fa-times y fa-bars iconos exportados desde fontawesome, ver index.html
 //Línea 20 alterna la vista del ícono en función de si el menú esta abierto o no.
 
-// TODO navbar en modviles pequeños (cambiar a mejor)
+// TODO navbar en moviles pequeños (cambiar a mejor)
 
-const Navbar = (props) => {
+const NavbarPrivate = (props) => {
 
-  // TODO se necesita un estado disponible desde todas partes para indicar si el usuario esta logeado?
   const [clicked, setClicked] = useState(false);
   const handleClick = () => setClicked(!clicked);
-  //const closeMobileMenu = () => setClicked(false);
 
-  const [userLogged, setUserLogged] = useState(false);
 
-  const {signOutToken} = useContext(AuthContext) 
+  const { signOutToken } = useContext(AuthContext)
 
   const handleSignOut = () => {
     signOutToken()
   };
 
-  const mainLink = userLogged ? '/home' : '/'
+  const mainLink = '/home'
 
   return (
     <>
       <nav className='navbar'>
 
         <Link to={mainLink} className="navbar-logo">
-          <i class="fas fa-key navbar-logo-icon"></i>
+          <i className="fas fa-key navbar-logo-icon"></i>
           <div className="navbar-logo-name">
             KeyPaX
           </div>
@@ -45,13 +42,13 @@ const Navbar = (props) => {
         <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
           {NavbarItems.map((item, index) => {
             if (item.private === true) {
-                return (
-                  <li>
-                    <Link className="nav-links" to={'/'} onClick={handleSignOut}>
-                      LOGOUT
-                    </Link>
-                  </li>
-                )
+              return (
+                <li key={index}>
+                  <Link className={item.cName} to={item.url} onClick={handleSignOut}>
+                    {item.title}
+                  </Link>
+                </li>
+              )
             } else {
               return (<></>)
             }
@@ -62,4 +59,4 @@ const Navbar = (props) => {
   );
 }
 
-export default Navbar;
+export default NavbarPrivate;

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState} from 'react';
+import { useHistory } from "react-router-dom"
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -6,6 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import sendSignUp from '../../services/SignUp.service';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,27 +53,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LogIn = () => {
+
+  const history = useHistory(); // Redirection
+
   const classes = useStyles();
 
-  const [errorMail, setErrorMail] = React.useState(false);
+  const [errorMail, setErrorMail] = useState(false);
 
-  const [errorName, setErrorName] = React.useState(false);
+  const [errorName, setErrorName] = useState(false);
 
-  const [errorPassword, setErrorPassword] = React.useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
 
-  const [errorPasswordConfirm, setErrorPasswordConfirm] = React.useState(false);
+  const [errorPasswordConfirm, setErrorPasswordConfirm] = useState(false);
 
-  const [failAuthEmail, setFailAuthEmail] = React.useState(false);
+  const [failAuthEmail, setFailAuthEmail] = useState(false);
 
-  const [failAuthPassword, setFailAuthPassword] = React.useState(false);
+  const [failAuthPassword, setFailAuthPassword] = useState(false);
 
-  const [mail, setMail] = React.useState("");
+  const [mail, setMail] = useState("");
 
-  const [name, setName] = React.useState("");
+  const [name, setName] = useState("");
 
-  const [password, setPassword] = React.useState("");
+  const [password, setPassword] = useState("");
 
-  const [passwordConfirm, setPasswordConfirm] = React.useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const [openVerify, setOpenVerify] = useState(false)
 
   const mailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
@@ -142,12 +153,16 @@ const LogIn = () => {
         console.log("--- ERROR " + response.status + ": !")
       } else if (response.status === 409) {
         console.log("--- ERROR " + response.status + ": !")
+        setFailAuthEmail(true)
       } else if (response.status === 500) {
         console.log("--- ERROR " + response.status + ": !")
       } else if (response.status === 501) {
         console.log("--- ERROR " + response.status + ": !")
       } else if (response.status === 200) {
         // TODO signup correcto
+        setOpenVerify(true)
+        console.log('Redirecting to login...')
+        history.push('/login')
       } else {
         // TODO network erorr????
       }
@@ -179,16 +194,16 @@ const LogIn = () => {
                 margin="none"
                 required
                 size="large"
-                fullWidth="true"
+                fullWidth={true}
                 id="name"
-                label="Nickname"
+                label="Apodo"
                 name="name"
                 autoComplete="name"
                 autoFocus
                 onChange={onChangeName}
                 value={name}
                 error={errorName}
-                helperText={errorName ? 'Enter your Nickname' : ' '}
+                helperText={errorName ? 'Introduce tu apodo' : ' '}
               />
             </Grid>
 
@@ -199,16 +214,16 @@ const LogIn = () => {
                 margin="none"
                 required
                 size="large"
-                fullWidth="true"
+                fullWidth={true}
                 id="email"
-                label="Email Address"
+                label="Correo Electrónico"
                 name="email"
                 autoComplete="email"
                 autoFocus
                 onChange={onChangeMail}
                 value={mail}
                 error={errorMail || failAuthEmail}
-                helperText={errorMail ? 'Enter a valid Email Address' : failAuthEmail ? 'Email Address Incorrect' : ' '}
+                helperText={errorMail ? 'Introduce una dirección correcta' : failAuthEmail ? 'Ya existe un usuario con esta dirección' : ' '}
               // TODO email address is already in use
               />
             </Grid>
@@ -220,15 +235,15 @@ const LogIn = () => {
                 margin="none"
                 required
                 size="large"
-                fullWidth="true"
+                fullWidth={true}
                 name="password"
-                label="Password"
+                label="Contraseña"
                 type="password"
                 id="password"
                 onChange={onChangePassword}
                 value={password}
                 error={errorPassword}
-                helperText={errorPassword ? 'Enter your Password' : ' '}
+                helperText={errorPassword ? 'Introduce tu contraseña' : ' '}
               // TODO crear estado que en onChangePassword se modifique indicando que le falta a la contraseña (longitud, números, demás) Mirar si existe módulo que lo haga
               />
             </Grid>
@@ -240,15 +255,15 @@ const LogIn = () => {
                 margin="none"
                 required
                 size="large"
-                fullWidth="true"
+                fullWidth={true}
                 name="passwordConfirm"
-                label="Confirm your Password"
+                label="Confirma tu contraseña"
                 type="password"
                 id="passwordConfirm"
                 value={passwordConfirm}
                 onChange={onChangePasswordConfirm}
                 error={errorPasswordConfirm}
-                helperText={errorPasswordConfirm ? 'Password is different' : ' '}
+                helperText={errorPasswordConfirm ? 'Contraseñas son diferentes' : ' '}
               />
             </Grid>
 
@@ -266,6 +281,26 @@ const LogIn = () => {
             </Button>
         </Grid>
       </form>
+
+      <Dialog
+        open={openVerify}
+        onClose={() => { setOpenVerify(false) }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Verificar correo"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Se ha enviado un correo para verificar tu identidad. Se necesita la verificación antes de Iniciar Sesión.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => { setOpenVerify(false) }} color="primary" autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </Container>
   );
 }

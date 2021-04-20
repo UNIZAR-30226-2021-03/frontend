@@ -18,7 +18,7 @@ export default function StickyFooter() {
   const classes = useStyles();
 
   return (
-    <Container fixed className={classes.container} component="main" maxWidht='lg'>
+    <Container className={classes.container} component="main" maxWidth="xl">
       <form className={classes.form} noValidate></form>
       <Grid container spacing={4}>
         <Grid item xs={4}>
@@ -75,7 +75,7 @@ export default function StickyFooter() {
         <Grid container
           spacing={0}
           direction="column"
-          justify="centetr"
+          justify="center"
           alignItems="center"
         >
           <Grid item xs={12}>
