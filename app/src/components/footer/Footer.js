@@ -45,14 +45,16 @@ export default function StickyFooter() {
             justify="center"
             alignItems="center"
           >
-            <Grid item xs={12}>
+             <Grid item xs={12}>
             <Typography variant="h6">
-              Contáctanos
+            -------------------------
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              barbarosoft@gmail.com
-          </Grid>
+            <Typography variant="h6">
+            Bárbaros Software S.A. 2021
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={4}>
@@ -64,24 +66,12 @@ export default function StickyFooter() {
           >
             <Grid item xs={12}>
             <Typography variant="h6">
-              Cuéntanos tu experiencia
+                Contáctanos
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              Encuesta de calidad
+                barbarosoft@gmail.com
             </Grid>
-          </Grid>
-        </Grid>
-        <Grid container
-          spacing={0}
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <Grid item xs={12}>
-            <Typography variant="h6">
-              Bárbaros Software S.A. 2021
-            </Typography>
           </Grid>
         </Grid>
       </Grid>
