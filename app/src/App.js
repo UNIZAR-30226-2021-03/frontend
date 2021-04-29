@@ -7,8 +7,8 @@ import Landing from './components/pages/Landing';
 import NavbarPrivate from './components/navbar/NavbarPrivate';
 import NavbarPublic from './components/navbar/NavbarPublic';
 import Footer from './components/footer/Footer';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import AuthContext from './context'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import {AuthContext} from './context'
 const App = () => {
 
   const [accessToken, setAccessToken] = useState(null)
@@ -45,17 +45,20 @@ const App = () => {
           ?
           <>
             <NavbarPublic />
+            <body>
             <Switch>
               <Route path='/login' exact component={LogIn}></Route>
               <Route path='/signup' exact component={SignUp}></Route>
               <Route path='/' default component={Landing}></Route>
             </Switch>
+            </body>
           </>
           :
           <>
             <NavbarPrivate />
             <Switch>
               <Route path='/home' default component={Home}></Route>
+              <Route path='/' exact><Redirect to={{pathname:'/home'}}/></Route>
             </Switch>
 
           </>
