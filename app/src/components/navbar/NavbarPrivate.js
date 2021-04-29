@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { NavbarItems } from './NavbarItems';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import AuthContext from '../../context'
+import {AuthContext} from '../../context'
 
 //Navbar con menú para vista desde web browser móvil:
 //Fas fa-times y fa-bars iconos exportados desde fontawesome, ver index.html

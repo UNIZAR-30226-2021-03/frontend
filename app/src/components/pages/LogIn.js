@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import sendLogIn from '../../services/LogIn.service.js';
 import send2FA from '../../services/2FA.service.js';
-import AuthContext from '../../context'
+import {AuthContext} from '../../context'
 import { useHistory } from "react-router-dom"
 //import { Redirect } from 'react-router';
 
