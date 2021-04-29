@@ -8,12 +8,15 @@ import NavbarPrivate from './components/navbar/NavbarPrivate';
 import NavbarPublic from './components/navbar/NavbarPublic';
 import Footer from './components/footer/Footer';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import {AuthContext} from './context'
+import AuthContext from './context'
+import {generatePassword} from './helpers/password.helper'
 const App = () => {
 
   const [accessToken, setAccessToken] = useState(null)
 
   useEffect(() => {
+    const password = generatePassword(16,true,true,true,"_-.");
+    console.log(password)
     setAccessToken(localStorage.getItem('accessToken'))
   }, [])
 
