@@ -1,14 +1,17 @@
 import axios from 'axios'
 import Routes from './Routes.js'
 
-const getCategoryList = async (accessToken) => {
+const getInfoList = async (accessToken, category_id) => {
     try {
         const config = {
             headers: {
                 accessToken
+            },
+            params: {
+                category_id
             }
         }
-        const response = await axios.get(Routes.URL_CATEGORY_LIST, config)
+        const response = await axios.get(Routes.URL_INFO_LIST, config)
         console.log("--- CODE " + response.status + ": !")
         return {
             status: response.status,
@@ -22,4 +25,4 @@ const getCategoryList = async (accessToken) => {
     }
 }
 
-export default getCategoryList;
+export default getInfoList;

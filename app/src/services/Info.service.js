@@ -1,15 +1,16 @@
 import axios from 'axios'
 import Routes from './Routes.js'
 
-const createCategory = async (accessToken, name) => {
+
+const createInfo = async (accessToken, name, username, password, url, description, category_id) => {
     try {
         const config = {
             headers: {
                 accessToken
             }
         }
-        const body = { name }
-        const response = await axios.post(Routes.URL_CATEGORY, body, config)
+        const body = { name, username, password, url, description, category_id }
+        const response = await axios.post(Routes.URL_INFO, body, config)
         console.log("--- CODE " + response.status + ": !")
         return {
             status: response.status,
@@ -23,17 +24,18 @@ const createCategory = async (accessToken, name) => {
     }
 }
 
-const deleteCategory = async (accessToken, category_id) => {
+const deleteInfo = async (accessToken, category_id, info_id) => {
     try {
         const config = {
             headers: {
                 accessToken
             },
             params: {
-                category_id
+                category_id,
+                info_id
             }
         }
-        const response = await axios.delete(Routes.URL_CATEGORY, config)
+        const response = await axios.delete(Routes.URL_INFO, config)
         console.log("--- CODE " + response.status + ": !")
         return {
             status: response.status,
@@ -46,7 +48,7 @@ const deleteCategory = async (accessToken, category_id) => {
     }
 }
 
-const renameCategory = async (accessToken, name, category_id) => {
+/*const renameInfo = async (accessToken, name, info_id) => {
     try {
         const config = {
             headers: {
@@ -55,9 +57,9 @@ const renameCategory = async (accessToken, name, category_id) => {
         }
         const body = {
             name,
-            category_id,
+            info_id,
         }
-        const response = await axios.put(Routes.URL_CATEGORY, body, config)
+        const response = await axios.put(Routes.URL_INFO, body, config)
         console.log("--- CODE " + response.status + ": !")
         return {
             status: response.status,
@@ -69,6 +71,6 @@ const renameCategory = async (accessToken, name, category_id) => {
             status: error.response.status,
         }
     }
-}
+}*/
 
-export { createCategory, deleteCategory, renameCategory };
+export { createInfo, deleteInfo, /*renameInfo*/ };
