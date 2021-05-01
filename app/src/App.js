@@ -8,7 +8,7 @@ import NavbarPrivate from './components/navbar/NavbarPrivate';
 import NavbarPublic from './components/navbar/NavbarPublic';
 import Footer from './components/footer/Footer';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import AuthContext from './context'
+import AuthContext from './context.js'
 import {generatePassword} from './helpers/password.helper'
 const App = () => {
 
@@ -47,6 +47,7 @@ const App = () => {
         {accessToken === null
           ?
           <>
+            {/** PUBLIC */}
             <NavbarPublic />
             <body>
             <Switch>
@@ -58,6 +59,7 @@ const App = () => {
           </>
           :
           <>
+            {/** PRIVATE */}
             <NavbarPrivate />
             <Switch>
               <Route path='/home' default component={Home}></Route>

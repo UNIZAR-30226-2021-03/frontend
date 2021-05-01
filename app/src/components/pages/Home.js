@@ -1,4 +1,4 @@
-import { AuthContext } from '../../context'
+import AuthContext from '../../context'
 import React, { useEffect, useState, useContext } from 'react'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,7 +6,7 @@ import { Button, Container, Grid } from '@material-ui/core';
 import getCategoryList from '../../services/CategoryList.service'
 import getInfoList from '../../services/InfoList.service'
 import Info from '../info/Info'
-import CreateInfo from '../createInfo/CreateInfo'
+import CreateInfo from '../info/CreateInfo'
 import CategoryList from '../category/CategoryList'
 import CreateCategory from '../category/CreateCategory'
 import DeleteCategory from '../category/DeleteCategory'
@@ -190,7 +190,13 @@ const Home = () => {
                             {infoList.length !== 0
                                 ? infoList.map((item, index) => {
                                     return (
-                                        <Info name={item.name} url={item.url} username={item.username} password={item.password} description={item.description} />
+                                        <Info
+                                            name={item.name}
+                                            url={item.url}
+                                            username={item.username}
+                                            password={item.password}
+                                            description={item.description}
+                                        />
                                     )
                                 })
                                 :
