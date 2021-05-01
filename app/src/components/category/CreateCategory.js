@@ -16,9 +16,7 @@ const CreateCategory = (props) => {
     // TODO mejor manera de pasar estos estados (atributo+setter)
     const openNewCategory = props.openNewCategory;
     const setOpenNewCategory = props.setOpenNewCategory;
-    const setCurrentCategory = props.setCurrentCategory;
-    //const setCurrentCategoryID = props.setCurrentCategoryID;
-    const loadCategoryList = props.loadCategoryList;
+    const refreshCategory = props.refreshCategory
     const categoryNameRegEx = props.categoryNameRegEx;
 
     const [nameNewCategory, setNameNewCategory] = useState("")
@@ -41,16 +39,12 @@ const CreateCategory = (props) => {
             } else if (response.status === 500) {
 
             } else if (response.status === 200) {
-                setCurrentCategory(nameNewCategory)
-                //TODO no se puede (recibir el ID???)
-                //setCurrentCategoryID()
+                refreshCategory({type:"create", name: nameNewCategory})
             } else {
                 // TODO network error
             }
+            setNameNewCategory("")
         }
-        // TODO y esto da error de undefined????
-        loadCategoryList()
-        setNameNewCategory("")
     }
 
 

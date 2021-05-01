@@ -16,14 +16,12 @@ const CreateCategory = (props) => {
     const setOpenDeleteCategory = props.setOpenDeleteCategory;
     const categoryList = props.categoryList;
     const currentCategory = props.currentCategory;
-    const setCurrentCategory = props.setCurrentCategory;
-    const setCurrentCategoryID = props.setCurrentCategoryID;
-    const loadCategoryList = props.loadCategoryList;
+    const refreshCategory = props.refreshCategory;
 
 
     const handleDeleteCategory = async () => {
         setOpenDeleteCategory(false)
-        const category = categoryList.find(category => category.name === currentCategory)
+        const category = categoryList.find(category => category.name === currentCategory.name)
         console.log("CATEGORY: " + category._id)
         const response = await deleteCategory(getAccessToken(), category._id)
         if (response.status === 400) {
@@ -33,9 +31,7 @@ const CreateCategory = (props) => {
         } else if (response.status === 500) {
         } else if (response.status === 200) {
             // TODO editar state hook de lista de categorias para eliminar el elemento (mas eficiente que cargar todas otra vez llamando a loadCategoryList)
-            setCurrentCategory("")
-            setCurrentCategoryID(null)
-            loadCategoryList()
+            refreshCategory({type:"delete"})
         } else {
             // TODO network error
         }
@@ -47,10 +43,10 @@ const CreateCategory = (props) => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">{"¿Desea borrar la categria " + currentCategory + " ?"}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">{"¿Desea borrar la categria " + currentCategory.name + " ?"}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    ¿Desea borrar la categoría "{currentCategory}"?
+                    ¿Desea borrar la categoría "{currentCategory.name}"?
                         </DialogContentText>
             </DialogContent>
 

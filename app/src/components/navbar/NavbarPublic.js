@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { NavbarItems } from './NavbarItems';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
@@ -34,7 +34,7 @@ const NavbarPublic = (props) => {
           {NavbarItems.map((item, index) => {
             if (item.private === false) {
               return (
-                <li key={index}>
+                <li key={item.key}>
                   <Link className={item.cName} to={item.url}>
                     {item.title}
                   </Link>

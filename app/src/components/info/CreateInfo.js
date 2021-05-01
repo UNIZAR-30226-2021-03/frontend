@@ -8,11 +8,9 @@ const CreateInfo = (props) => {
 
     const { getAccessToken } = useContext(AuthContext)
 
-    // TODO mejor manera de pasar estos estados (atributo+setter)
     const currentCategory = props.category;
-    const categoryList = props.categoryList;
     const setOpen = props.setOpen;
-    const loadInfoList = props.loadInfoList;
+    const refreshInfoList = props.refreshInfoList;
 
     const [nameNewInfo, setNameNewInfo] = useState("")
     const [usernameNewInfo, setUsernameNewInfo] = useState("")
@@ -27,21 +25,13 @@ const CreateInfo = (props) => {
     const [errorDescriptionNewInfo, setErrorDescriptionNewInfo] = useState(false)
 
     const handleCreateInfo = async () => {
-        /*
-        if (!infoNameRegEx.test(nameNewInfo)) {
-            // TODO MIRAR SI NOMBRE DE CATEGORIA YA EXISTE
-            // TODO tener en cuenta que son ALL CAPS
-            setErrorNameNewInfo(true)
-        } else {
-            */
-        //setOpenNewCategory(false)
-        const category = categoryList.find(category => category.name === currentCategory)
-        setNameNewInfo("uno")
-        setUsernameNewInfo("jav")
-        setPasswordNewInfo("aaa")
-        setUrlNewInfo("http://google.com")
-        setDescriptionNewInfo("jeje descripcion")
-        const response = await createInfo(getAccessToken(), nameNewInfo, usernameNewInfo, passwordNewInfo, urlNewInfo, descriptionNewInfo, category._id)
+
+        //setNameNewInfo("uno")
+        //setUsernameNewInfo("jav")
+        //setPasswordNewInfo("aaa")
+        //setUrlNewInfo("http://google.com")
+        //setDescriptionNewInfo("jeje descripcion")
+        const response = await createInfo(getAccessToken(), nameNewInfo, usernameNewInfo, passwordNewInfo, urlNewInfo, descriptionNewInfo, currentCategory._id)
         if (response.status === 400) {
 
         } else if (response.status === 401) {
@@ -51,7 +41,7 @@ const CreateInfo = (props) => {
         } else if (response.status === 500) {
 
         } else if (response.status === 200) {
-            loadInfoList()
+            refreshInfoList()
         } else {
             // TODO network error
         }

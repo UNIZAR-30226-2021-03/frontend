@@ -17,11 +17,9 @@ const RenameCategory = (props) => {
     const openRenameCategory = props.openRenameCategory;
     const setOpenRenameCategory = props.setOpenRenameCategory;
     const categoryList = props.categoryList;
-    const setCurrentCategory = props.setCurrentCategory;
+    const refreshCategory = props.refreshCategory;
     const currentCategory = props.currentCategory;
-    const setCurrentCategoryID = props.setCurrentCategoryID;
     const categoryNameRegEx = props.categoryNameRegEx;
-    const loadCategoryList = props.loadCategoryList;
 
     const [nameRenameCategory, setNameRenameCategory] = useState("")
     const [errorNameRenameCategory, setErrorNameRenameCategory] = useState(false)
@@ -33,7 +31,7 @@ const RenameCategory = (props) => {
             setErrorNameRenameCategory(true)
         } else {
             setOpenRenameCategory(false)
-            const category = categoryList.find(category => category.name === currentCategory)
+            const category = categoryList.find(category => category.name === currentCategory.name)
             const response = await renameCategory(getAccessToken(), nameRenameCategory, category._id)
             if (response.status === 400) {
 
@@ -44,9 +42,7 @@ const RenameCategory = (props) => {
             } else if (response.status === 500) {
 
             } else if (response.status === 200) {
-                setCurrentCategory(nameRenameCategory)
-                setCurrentCategoryID(category._id)
-                loadCategoryList()
+                refreshCategory({type:"rename", name:nameRenameCategory, _id:category._id})
             } else {
                 // TODO network error
             }

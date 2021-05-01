@@ -56,8 +56,7 @@ const Home = () => {
     const classes = useStyles();
 
     const [categoryList, setCategoryList] = useState([{}])
-    const [currentCategory, setCurrentCategory] = useState("")
-    const [currentCategoryID, setCurrentCategoryID] = useState(null)
+    const [currentCategory, setCurrentCategory] = useState({ name: "", _id: null })
 
     const [openNewCategory, setOpenNewCategory] = useState(false)
     const [openDeleteCategory, setOpenDeleteCategory] = useState(false)
@@ -65,17 +64,56 @@ const Home = () => {
 
 
     const [infoList, setInfoList] = useState([{}])
-    const [currentInfo, setCurrentInfo] = useState("")
 
     const [openNewInfo, setOpenNewInfo] = useState(false)
 
     // TODO arreglar esto
     useEffect(() => {
-        loadCategoryList()
-        console.log("puta")
-    }, []) // TODO resolver dependencias bien (??)
+        async function loadCategoryList() {
+            const response = await getCategoryList(getAccessToken())
+            if (response.status === 401) {
 
-    const loadCategoryList = async () => {
+            } else if (response.status === 403) {
+
+            } else if (response.status === 500) {
+
+            } else if (response.status === 200) {
+                setCategoryList(response.data)
+                if (response.data.length !== 0) {
+                    setCurrentCategory({ name: response.data[0].name, _id: response.data[0]._id })
+                }
+            } else {
+                // TODO network error
+            }
+        }
+        loadCategoryList()
+    }, [getAccessToken])
+
+    useEffect(() => {
+        async function loadInfoList() {
+                {
+                console.log("ahora:", currentCategory.name)
+                // TODO resolver, a veces category undefinec
+                console.log(currentCategory.name)
+                const response = await getInfoList(getAccessToken(), currentCategory.id);
+
+                if (response.status === 401) {
+
+                } else if (response.status === 403) {
+
+                } else if (response.status === 500) {
+
+                } else if (response.status === 200) {
+                    setInfoList(response.data)
+                } else {
+                    // TODO network error
+                }
+            }
+        }
+        loadInfoList()
+    }, [getAccessToken, currentCategory])
+
+    const refreshCategory = async (action) => {
         const response = await getCategoryList(getAccessToken())
         if (response.status === 401) {
 
@@ -85,60 +123,45 @@ const Home = () => {
 
         } else if (response.status === 200) {
             setCategoryList(response.data)
-            console.log(response.data)
-            if (response.data.length === 0) { // Si no existe ninguna categoria
-                setCurrentCategory("")
-                setCurrentCategoryID(null)
-            } else if (currentCategory === "") { // Si existen categorias y esta vacía
-                setCurrentCategory(response.data[0].name)
-                setCurrentCategoryID(response.data[0]._id)
-                loadInfoList()
-            } else if (response.data.find(category => category.name === currentCategory) === undefined) { // Si la cateogoria actual se ha borrado
-                setCurrentCategory(response.data[0].name)
-                setCurrentCategoryID(response.data[0]._id)
-                loadInfoList()
+            if (action.type === "create") {
+                const category = response.data.find(category => category.name === action.name)
+                setCurrentCategory({ name: category.name, _id: category._id })
+            } else if (action.type === "rename") {
+                setCurrentCategory({ name: action.name, _id: action._id })
+            } else if (action.type === "delete") {
+                if (response.data.length === 0) {
+                    setCurrentCategory({ name: "", _id: null })
+                } else {
+                    setCurrentCategory({ name: response.data[0].name, _id: response.data[0]._id })
+                }
             }
         } else {
             // TODO network error
         }
     }
+    const refreshInfoList = async() => {
+        const response = await getInfoList(getAccessToken(),currentCategory._id)
+        if (response.status === 401) {
 
-    // TODO quitar parametro si se soluciona
-    const loadInfoList = async () => {
+        } else if (response.status === 403) {
 
-        if (currentCategory !== "") {
-            console.log("ahora:", currentCategory)
-            // TODO resolver, a veces category undefinec
+        } else if (response.status === 500) {
 
-            //const category = categoryList.find(category => category.name === currentCategory)
-            console.log(currentCategory)
-            console.log(categoryList)
-            const response = await getInfoList(getAccessToken(), currentCategoryID)
-            if (response.status === 401) {
-
-            } else if (response.status === 403) {
-
-            } else if (response.status === 500) {
-
-            } else if (response.status === 200) {
-                setInfoList(response.data)
-                console.log(response.data)
-                // TODO revisar esta funcion (necesariia esta parte??)
-                if (response.data.length === 0) { // Si no existe ninguna categoria
-                    setCurrentInfo("")
-                } else if (currentInfo === "") { // Si existen categorias y esta vacía
-                    setCurrentInfo(response.data[0].name)
-                } else if (response.data.find(info => info.name === currentInfo) === undefined) { // Si la cateogoria actual se ha borrado
-                    setCurrentInfo(response.data[0].name)
-                }
-            } else {
-                // TODO network error
-            }
+        } else if (response.status === 200) {
+            setInfoList(response.data)
+        } else {
+            // TODO network error
         }
+
     }
 
-    const categoryNameRegEx = /^([a-zñA-ZÑ0-9\u0600-\u06FF\u0660-\u0669\u06F0-\u06F9 _.-]+)$/i;
+    /**
+     * 1. Pedir info list
+     * 2. Actualizar infoList (state)
+     * 3. Actualizar currentInfo (puede que no haya ninguna)
+     */
 
+    const categoryNameRegEx = /^([a-zñA-ZÑ0-9\u0600-\u06FF\u0660-\u0669\u06F0-\u06F9 _.-]+)$/i;
 
     return (
         <Container component='main' maxWidth='xl' className={classes.container}>
@@ -161,7 +184,6 @@ const Home = () => {
                         <CategoryList
                             setOpenNewCategory={setOpenNewCategory}
                             setCurrentCategory={setCurrentCategory}
-                            setCurrentCategoryID={setCurrentCategoryID}
                             categoryList={categoryList}
                         />
 
@@ -177,20 +199,32 @@ const Home = () => {
 
                             {/** CURRENT CATEGORY BUTTONS */}
                             <Typography component='div' variant='h3' align='center'>
-                                {currentCategory}
+                                {currentCategory.name}
                             </Typography>
 
                             <Button fullWidth={true} onClick={() => { setOpenDeleteCategory(true) }}> Eliminar CATEGORIA - </Button>
 
                             <Button fullWidth={true} onClick={() => { setOpenRenameCategory(true) }}> Renombrar CATEGORIA X </Button>
 
-                            {/** PASSWORD INFO */}
                             <Button fullWidth={true} color="secondary" variant="contained" onClick={() => { setOpenNewInfo(true) }}> AÑADIR CONTRASEÑA + </Button>
+                            {/** CREATE INFO */}
+                            {openNewInfo
+                                ?
+                                <CreateInfo
+                                    category={currentCategory}
+                                    setOpen={setOpenNewInfo}
+                                    refreshInfoList={refreshInfoList}>
+                                </CreateInfo>
+                                :
+                                <></>
+                            }
 
-                            {infoList.length !== 0
-                                ? infoList.map((item, index) => {
+                            {/** PASSWORD INFO */}
+                            {infoList.length !== 0 ?
+                                infoList.map((item) => {
                                     return (
                                         <Info
+                                            id={item._id}
                                             name={item.name}
                                             url={item.url}
                                             username={item.username}
@@ -200,24 +234,8 @@ const Home = () => {
                                     )
                                 })
                                 :
-                                (<></>)
-                            }
-
-                            {/** CREATE INFO */}
-                            {openNewInfo
-                                ?
-                                <CreateInfo
-                                    category={currentCategory}
-                                    categoryList={categoryList}
-                                    setOpen={setOpenNewInfo}
-                                    loadInfoList={loadInfoList}>
-                                </CreateInfo>
-                                :
-                                <></>
-                            }
-
-
-
+                                ( <></> )
+                            } 
                         </>
                         :
                         <>
@@ -240,9 +258,7 @@ const Home = () => {
                 <CreateCategory
                     openNewCategory={openNewCategory}
                     setOpenNewCategory={setOpenNewCategory}
-                    setCurrentCategory={setCurrentCategory}
-                    setCurrentCategoryID={setCurrentCategoryID}
-                    loadCategoryList={loadCategoryList}
+                    refreshCategory={refreshCategory}
                     categoryNameRegEx={categoryNameRegEx}
                 />
 
@@ -252,9 +268,7 @@ const Home = () => {
                     setOpenDeleteCategory={setOpenDeleteCategory}
                     categoryList={categoryList}
                     currentCategory={currentCategory}
-                    setCurrentCategory={setCurrentCategory}
-                    setCurrentCategoryID={setCurrentCategoryID}
-                    loadCategoryList={loadCategoryList}
+                    refreshCategory={refreshCategory}
                 />
 
                 {/** 4.3. RENAME CATEGORY */}
@@ -263,11 +277,9 @@ const Home = () => {
                     openRenameCategory={openRenameCategory}
                     setOpenRenameCategory={setOpenRenameCategory}
                     categoryList={categoryList}
-                    setCurrentCategory={setCurrentCategory}
                     currentCategory={currentCategory}
-                    setCurrentCategoryID={setCurrentCategoryID}
                     categoryNameRegEx={categoryNameRegEx}
-                    loadCategoryList={loadCategoryList}
+                    refreshCategory={refreshCategory}
                 />
 
             </Grid>

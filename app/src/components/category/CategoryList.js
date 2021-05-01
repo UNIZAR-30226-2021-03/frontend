@@ -3,16 +3,13 @@ import { Button, Container, Grid } from '@material-ui/core';
 
 const CategoryList = (props) => {
 
-
     // TODO mejor manera de pasar estos estados (atributo+setter)
     const setOpenNewCategory = props.setOpenNewCategory;
     const setCurrentCategory = props.setCurrentCategory;
-    const setCurrentCategoryID = props.setCurrentCategoryID;
     const categoryList = props.categoryList;
 
     const handleChangeCategory = (item) => {
-        setCurrentCategory(item.name)
-        setCurrentCategoryID(item._id)
+        setCurrentCategory({name:item.name, _id:item._id})
         console.log("Change to " + item.name)
     }
 
