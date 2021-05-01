@@ -4,6 +4,7 @@ import Home from './components/pages/Home';
 import LogIn from './components/pages/LogIn';
 import SignUp from './components/pages/SignUp';
 import Landing from './components/pages/Landing';
+import Integrantes from './components/pages/Integrantes';
 import NavbarPrivate from './components/navbar/NavbarPrivate';
 import NavbarPublic from './components/navbar/NavbarPublic';
 import Footer from './components/footer/Footer';
@@ -54,6 +55,7 @@ const App = () => {
               <Route path='/login' exact component={LogIn}></Route>
               <Route path='/signup' exact component={SignUp}></Route>
               <Route path='/' default component={Landing}></Route>
+              <Route path='/integrantes' exact component={Integrantes}></Route>
             </Switch>
             </body>
           </>
@@ -64,6 +66,7 @@ const App = () => {
             <Switch>
               <Route path='/home' default component={Home}></Route>
               <Route path='/' exact><Redirect to={{pathname:'/home'}}/></Route>
+              <Route path='/integrantes' exact component={Integrantes}></Route>
             </Switch>
 
           </>
