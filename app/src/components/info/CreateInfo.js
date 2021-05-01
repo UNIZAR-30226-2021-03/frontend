@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button, Container, Grid } from '@material-ui/core';
 import { createInfo } from '../../services/Info.service.js'
 
+
 const CreateInfo = (props) => {
 
     const { getAccessToken } = useContext(AuthContext)
@@ -26,11 +27,6 @@ const CreateInfo = (props) => {
 
     const handleCreateInfo = async () => {
 
-        //setNameNewInfo("uno")
-        //setUsernameNewInfo("jav")
-        //setPasswordNewInfo("aaa")
-        //setUrlNewInfo("http://google.com")
-        //setDescriptionNewInfo("jeje descripcion")
         const response = await createInfo(getAccessToken(), nameNewInfo, usernameNewInfo, passwordNewInfo, urlNewInfo, descriptionNewInfo, currentCategory._id)
         if (response.status === 400) {
 
@@ -42,15 +38,10 @@ const CreateInfo = (props) => {
 
         } else if (response.status === 200) {
             refreshInfoList()
+            setOpen(false)
         } else {
             // TODO network error
         }
-        //}
-
-        // TODO me he encontrado esto, no se que hace REVISAR
-        //loadCategoryList()
-        //setNameNewCategory("")
-        //
     }
 
     const handleCancelNewInfo = () => {
@@ -191,7 +182,11 @@ const CreateInfo = (props) => {
 
 
                 </Grid>
-                <Grid container>
+                <Grid container
+                    spacing={1}
+                    direction='row'
+                    justify='center'
+                    alignItems='center'>
                     <Grid item xs={2}>
                         <Button fullWidth={true} color="secondary" variant="contained" onClick={() => { handleCancelNewInfo() }}> CANCELAR</Button>
                     </Grid>

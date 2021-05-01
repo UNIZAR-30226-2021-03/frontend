@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Integrantes from './components/pages/Integrantes';
+import Integrantes from '../pages/Integrantes';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -55,14 +55,14 @@ export default function StickyFooter() {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Button
+             {/* <Button
                 onClick={Integrantes} //Falta conectar correctamente con la pantalla de integrantes
                 className={classes.submit}
                 fullWidth={true}
                 //type="submit"
-              >
+             >
                 Integrantes
-              </Button>
+              </Button>*/}
             </Grid>
           </Grid>
         </Grid>

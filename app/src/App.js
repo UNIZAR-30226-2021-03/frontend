@@ -65,7 +65,7 @@ const App = () => {
             <NavbarPrivate />
             <Switch>
               <Route path='/home' default component={Home}></Route>
-              <Route path='/' exact><Redirect to={{pathname:'/home'}}/></Route>
+              <Route path='/' exact ><Redirect to={{pathname:'/home'}}/></Route>
               <Route path='/integrantes' exact component={Integrantes}></Route>
             </Switch>
 

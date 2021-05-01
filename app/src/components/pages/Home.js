@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Home = () => {
+const Home = (props) => {
 
     const { getAccessToken } = useContext(AuthContext)
 
@@ -91,23 +91,17 @@ const Home = () => {
 
     useEffect(() => {
         async function loadInfoList() {
-                {
-                console.log("ahora:", currentCategory.name)
-                // TODO resolver, a veces category undefinec
-                console.log(currentCategory.name)
-                const response = await getInfoList(getAccessToken(), currentCategory.id);
+            console.log(currentCategory.name)
+            const response = await getInfoList(getAccessToken(), currentCategory._id);
+            if (response.status === 401) {
+            } else if (response.status === 403) {
 
-                if (response.status === 401) {
+            } else if (response.status === 500) {
 
-                } else if (response.status === 403) {
-
-                } else if (response.status === 500) {
-
-                } else if (response.status === 200) {
-                    setInfoList(response.data)
-                } else {
-                    // TODO network error
-                }
+            } else if (response.status === 200) {
+                setInfoList(response.data)
+            } else {
+                // TODO network error
             }
         }
         loadInfoList()
@@ -224,12 +218,14 @@ const Home = () => {
                                 infoList.map((item) => {
                                     return (
                                         <Info
-                                            id={item._id}
+                                            _id={item._id}
+                                            category_id={currentCategory._id}
                                             name={item.name}
                                             url={item.url}
                                             username={item.username}
                                             password={item.password}
                                             description={item.description}
+                                            refreshInfoList={refreshInfoList}
                                         />
                                     )
                                 })

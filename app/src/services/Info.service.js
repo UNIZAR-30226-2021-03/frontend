@@ -48,7 +48,7 @@ const deleteInfo = async (accessToken, category_id, info_id) => {
     }
 }
 
-/*const renameInfo = async (accessToken, name, info_id) => {
+const renameInfo = async (accessToken, name, username, password, url, description, category_id, info_id) => {
     try {
         const config = {
             headers: {
@@ -57,6 +57,11 @@ const deleteInfo = async (accessToken, category_id, info_id) => {
         }
         const body = {
             name,
+            password,
+            username,
+            url,
+            description,
+            category_id,
             info_id,
         }
         const response = await axios.put(Routes.URL_INFO, body, config)
@@ -67,10 +72,11 @@ const deleteInfo = async (accessToken, category_id, info_id) => {
         }
     }
     catch (error) {
+        console.log(error)
         return {
             status: error.response.status,
         }
     }
-}*/
+}
 
-export { createInfo, deleteInfo, /*renameInfo*/ };
+export { createInfo, deleteInfo, renameInfo };
