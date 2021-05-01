@@ -53,7 +53,7 @@ const renameInfo = async (accessToken, name, username, password, url, descriptio
         const config = {
             headers: {
                 accessToken
-            },
+            }
         }
         const body = {
             name,

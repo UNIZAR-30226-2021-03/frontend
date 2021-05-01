@@ -1,12 +1,32 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext,useEffect} from 'react'
 import AuthContext from '../../context'
 import { Container, Grid, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import { BsFillCaretDownFill,BsFillCaretUpFill } from "react-icons/bs";
-import { deleteInfo,renameInfo } from '../../services/Info.service.js'
+import { BsFillCaretDownFill,BsFillCaretUpFill,BsFileEarmarkArrowDown,BsFileEarmarkArrowUp } from "react-icons/bs";
+import { deleteInfo,renameInfo } from '../../services/Info.service'
+import { uploadFile } from '../../services/File.service'
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+
+    file: {
+        width: '100px',
+        height: '100px'
+        
+    },
+    file_photo: {
+        width: '50px',
+        height: '50px'
+    }
+}));
+
+
+
 const Info = (props) => {
 
     const { getAccessToken } = useContext(AuthContext)
+
+    const classes = useStyles();
 
     const name = props.name
     const username = props.username
@@ -16,14 +36,23 @@ const Info = (props) => {
     const _id = props._id
     const category_id = props.category_id
     const refreshInfoList = props.refreshInfoList;
+    const file = props.file;
     
-    const [nameNewInfo, setNameNewInfo] = useState(name)
-    const [usernameNewInfo, setUsernameNewInfo] = useState(username)
-    const [passwordNewInfo, setPasswordNewInfo] = useState(password)
-    const [urlNewInfo, setUrlNewInfo] = useState(url)
-    const [descriptionNewInfo, setDescriptionNewInfo] = useState(description)
+    const [nameNewInfo, setNameNewInfo] = useState("")
+    const [usernameNewInfo, setUsernameNewInfo] = useState("")
+    const [passwordNewInfo, setPasswordNewInfo] = useState("")
+    const [urlNewInfo, setUrlNewInfo] = useState("")
+    const [descriptionNewInfo, setDescriptionNewInfo] = useState("")
 
     const [onChange,setOnChange] = useState(false);
+
+    useEffect(() => {
+        setNameNewInfo(name)
+        setUsernameNewInfo(username)
+        setPasswordNewInfo(password)
+        setUrlNewInfo(url)
+        setDescriptionNewInfo(description)
+    })
 
     const onChangeNameNewInfo = (e) => {
         setNameNewInfo(e.target.value)
@@ -78,7 +107,26 @@ const Info = (props) => {
             // TODO network error
         }
     }
+    const onHandleUpload = async(e) => {
+        const response = await uploadFile(getAccessToken(),category_id,_id,e.target.files[0])
+        if (response.status === 400) {
 
+        } else if (response.status === 401) {
+
+        } else if (response.status === 403) {
+
+        } else if (response.status === 500) {
+
+        } else if (response.status === 200) {
+            refreshInfoList()
+        } else {
+            // TODO network error
+        }
+    }
+
+    const onHandleDownload = async() => {
+
+    }
     return (
         <Container component='main' maxWidth='xl'>
 
@@ -92,7 +140,7 @@ const Info = (props) => {
                         alignItems='center'
                     >
                         <Grid item>
-                            {name}
+                            {nameNewInfo}
                         </Grid>
                         <Grid item>
                             <Button onClick={() => setOnChange(true)}>
@@ -191,6 +239,53 @@ const Info = (props) => {
                             />
                         </Grid>
                     </Grid>
+                    { file === undefined ?
+                        <Grid container
+                            spacing={2}
+                            direction='column'
+                            justify='center'
+                            alignItems='center'>
+                            <Grid item
+                                fullWidth={true} >
+                                <Button
+                                    className={classes.file}
+                                    variant="contained"
+                                    component="label"
+                                    onChange={onHandleUpload}
+                                    >
+                                      <BsFileEarmarkArrowUp className={classes.file_photo}/>
+                                      <input
+                                        type="file"
+                                        hidden
+                                      />
+                                </Button>
+                            </Grid>
+                            <Grid item
+                                fullWidth={true} >
+                                SUBIR ARCHIVO
+                            </Grid>
+                        </Grid>
+                        :
+                        <Grid container
+                            spacing={0}
+                            direction='column'
+                            justify='center'
+                            alignItems='center'>
+                            <Grid item
+                                fullWidth={true} >
+                                <Button 
+                                    variant="contained"
+                                    component="label"
+                                    onClick={onHandleDownload}>
+                                    <BsFileEarmarkArrowDown/>
+                                </Button>
+                            </Grid>
+                            <Grid item
+                                fullWidth={true} >
+                                {file.name}
+                            </Grid>
+                        </Grid>
+                    }
                     <Grid container
                         spacing={1}
                         direction='row'

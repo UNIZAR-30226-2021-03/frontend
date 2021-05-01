@@ -16,6 +16,7 @@ const Routes = {
   URL_INFO: BASE_URL + BASE_PRIVATE + "info/",
   URL_CATEGORY_LIST: BASE_URL + BASE_PRIVATE + "categories/",
   URL_INFO_LIST: BASE_URL + BASE_PRIVATE + "infos/",
+  URL_FILE: BASE_URL + BASE_PRIVATE + "file"
 };
 
 export default Routes;  

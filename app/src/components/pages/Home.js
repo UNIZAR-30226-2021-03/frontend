@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Home = (props) => {
+const Home = () => {
 
     const { getAccessToken } = useContext(AuthContext)
 
@@ -225,6 +225,7 @@ const Home = (props) => {
                                             username={item.username}
                                             password={item.password}
                                             description={item.description}
+                                            file={item.file}
                                             refreshInfoList={refreshInfoList}
                                         />
                                     )
