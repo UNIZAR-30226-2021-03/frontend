@@ -54,8 +54,8 @@ const App = () => {
             <Switch>
               <Route path='/login' exact component={LogIn}></Route>
               <Route path='/signup' exact component={SignUp}></Route>
-              <Route path='/' default component={Landing}></Route>
               <Route path='/integrantes' exact component={Integrantes}></Route>
+              <Route path='/' default component={Landing}></Route>
             </Switch>
             </body>
           </>
@@ -64,9 +64,9 @@ const App = () => {
             {/** PRIVATE */}
             <NavbarPrivate />
             <Switch>
+            <Route path='/integrantes' exact component={Integrantes}></Route>
               <Route path='/home' default component={Home}></Route>
               <Route path='/' exact ><Redirect to={{pathname:'/home'}}/></Route>
-              <Route path='/integrantes' exact component={Integrantes}></Route>
             </Switch>
 
           </>
