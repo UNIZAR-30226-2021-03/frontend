@@ -68,7 +68,6 @@ const App = () => {
               <Route path='/home' default component={Home}></Route>
               <Route path='/' exact ><Redirect to={{pathname:'/home'}}/></Route>
             </Switch>
-
           </>
         }
         {/** // TODO CREAR UNA RUTA CUNDO NO EXISTA Routa por defecto sin "exact" */}
