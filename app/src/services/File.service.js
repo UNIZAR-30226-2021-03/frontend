@@ -12,7 +12,6 @@ const uploadFile = async(accessToken,category_id,info_id,file) => {
                 info_id
             }
         }
-        console.log(file)
         const fb = new FormData()
         fb.append("file",file)
         const response = await axios.post(Routes.URL_FILE,fb,config)
@@ -29,4 +28,30 @@ const uploadFile = async(accessToken,category_id,info_id,file) => {
     }
 }
 
-export {uploadFile}
+
+const downloadFile = async(accessToken,file_id) => {
+    console.log(file_id)
+    try{
+        const config = {
+            headers: {
+                accessToken
+            },
+            params: {
+                file_id
+            }
+        }
+        const response = await axios.get(Routes.URL_FILE,config)
+        console.log("--- CODE " + response.status + ": !")
+        return {
+            status: response.status,
+            data: response.data
+        }
+    }catch(error){
+        console.log(error)
+        return {
+            status: error.response.status,
+        }
+    }
+}
+
+export {uploadFile,downloadFile}

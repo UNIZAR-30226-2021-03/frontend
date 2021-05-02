@@ -4,8 +4,9 @@ import { Container, Grid, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { BsFillCaretDownFill,BsFillCaretUpFill,BsFileEarmarkArrowDown,BsFileEarmarkArrowUp } from "react-icons/bs";
 import { deleteInfo,renameInfo } from '../../services/Info.service'
-import { uploadFile } from '../../services/File.service'
+import { downloadFile, uploadFile } from '../../services/File.service'
 import { makeStyles } from '@material-ui/core/styles';
+import FileDownload from 'js-file-download';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -125,11 +126,23 @@ const Info = (props) => {
     }
 
     const onHandleDownload = async() => {
+        const response = await downloadFile(getAccessToken(),file.file_id)
+        if (response.status === 400) {
 
+        } else if (response.status === 401) {
+
+        } else if (response.status === 403) {
+
+        } else if (response.status === 500) {
+
+        } else if (response.status === 200) {
+            FileDownload(response.data,file.name)
+        } else {
+            // TODO network error
+        }
     }
     return (
         <Container component='main' maxWidth='xl'>
-
             {onChange === false ?
                 <Container maxWidth="xl">
                     <Grid
@@ -276,8 +289,9 @@ const Info = (props) => {
                                 <Button 
                                     variant="contained"
                                     component="label"
-                                    onClick={onHandleDownload}>
-                                    <BsFileEarmarkArrowDown/>
+                                    onClick={onHandleDownload}
+                                    className={classes.file}>
+                                    <BsFileEarmarkArrowDown className={classes.file_photo}/>
                                 </Button>
                             </Grid>
                             <Grid item
