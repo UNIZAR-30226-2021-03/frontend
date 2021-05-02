@@ -30,7 +30,6 @@ const uploadFile = async(accessToken,category_id,info_id,file) => {
 
 
 const downloadFile = async(accessToken,file_id) => {
-    console.log(file_id)
     try{
         const config = {
             headers: {
@@ -54,4 +53,30 @@ const downloadFile = async(accessToken,file_id) => {
     }
 }
 
-export {uploadFile,downloadFile}
+const deleteFile = async(accessToken,category_id,info_id,file_id) => {
+    try{
+        const config = {
+            headers: {
+                accessToken
+            },
+            params: {
+                category_id,
+                info_id,
+                file_id
+            }
+        }
+        const response = await axios.delete(Routes.URL_FILE,config)
+        console.log("--- CODE " + response.status + ": !")
+        return {
+            status: response.status,
+            data: response.data
+        }
+    }catch(error){
+        console.log(error)
+        return {
+            status: error.response.status,
+        }
+    }
+}
+
+export {uploadFile,downloadFile,deleteFile}

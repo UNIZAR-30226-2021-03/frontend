@@ -4,7 +4,7 @@ import { Container, Grid, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { BsFillCaretDownFill,BsFillCaretUpFill,BsFileEarmarkArrowDown,BsFileEarmarkArrowUp } from "react-icons/bs";
 import { deleteInfo,renameInfo } from '../../services/Info.service'
-import { downloadFile, uploadFile } from '../../services/File.service'
+import { downloadFile, uploadFile, deleteFile } from '../../services/File.service'
 import { makeStyles } from '@material-ui/core/styles';
 import FileDownload from 'js-file-download';
 
@@ -137,6 +137,23 @@ const Info = (props) => {
 
         } else if (response.status === 200) {
             FileDownload(response.data,file.name)
+        } else {
+            // TODO network error
+        }
+    }
+
+    const onHandleDeleteFile = async() => {
+        const response = await deleteFile(getAccessToken(),category_id,_id,file.file_id)
+        if (response.status === 400) {
+
+        } else if (response.status === 401) {
+
+        } else if (response.status === 403) {
+
+        } else if (response.status === 500) {
+
+        } else if (response.status === 200) {
+            refreshInfoList()
         } else {
             // TODO network error
         }
@@ -297,6 +314,9 @@ const Info = (props) => {
                             <Grid item
                                 fullWidth={true} >
                                 {file.name}
+                            </Grid>
+                            <Grid item>
+                                <Button fullWidth={true} color="secondary" variant="contained" onClick={onHandleDeleteFile}> BORRAR</Button>
                             </Grid>
                         </Grid>
                     }
