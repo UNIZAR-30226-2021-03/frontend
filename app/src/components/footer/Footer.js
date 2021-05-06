@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
+import './Footer.css';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,7 +23,7 @@ export default function StickyFooter() {
   const classes = useStyles();
 
   return (
-    <Container className={classes.container} component="main" maxWidth="xl">
+    <Container className="container" component="main" maxWidth="xl">
       <Grid container spacing={4}>
         <Grid item xs={4}>
           <Grid container
@@ -37,7 +38,7 @@ export default function StickyFooter() {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Link to='/integrantes' className={classes.link}>
+              <Link to='/integrantes' className="link">
                 Integrantes
               </Link>
             </Grid>

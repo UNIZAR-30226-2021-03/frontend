@@ -1,7 +1,7 @@
 import { Box, Container } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import './Landing.css';
+// import './Landing.css';
 import keyImage from '../../resources/key-1315566.jpg';
 
 const useStyles = makeStyles((theme) => ({

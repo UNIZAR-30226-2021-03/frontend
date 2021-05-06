@@ -1,7 +1,7 @@
     /*Estilo de la barra*/
     
     .navbar {
-        background: rgb(5, 125, 205);
+        background-color: rgb(5, 125, 205);
         display: flex;
         justify-content: center;
         align-items: center;
