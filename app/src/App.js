@@ -1,4 +1,3 @@
-import './App.css';
 import React, { useMemo, useEffect, useState } from 'react';
 import Home from './components/pages/Home';
 import LogIn from './components/pages/LogIn';
@@ -50,14 +49,12 @@ const App = () => {
           <>
             {/** PUBLIC */}
             <NavbarPublic />
-            <body>
             <Switch>
               <Route path='/login' exact component={LogIn}></Route>
               <Route path='/signup' exact component={SignUp}></Route>
               <Route path='/integrantes' exact component={Integrantes}></Route>
               <Route path='/' default component={Landing}></Route>
             </Switch>
-            </body>
           </>
           :
           <>

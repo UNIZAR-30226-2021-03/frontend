@@ -1,11 +1,10 @@
-import { Box, Container } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-// import './Landing.css';
+//import './Landing.css';
 import keyImage from '../../resources/key-1315566.jpg';
 
 const useStyles = makeStyles((theme) => ({
-
 
     landingText: {
         position: 'fixed',
@@ -21,10 +20,14 @@ const useStyles = makeStyles((theme) => ({
     title: {
         fontSize: '50px',
         textAlign: 'center',
-        paddingTop: '15px',
+        
+    },
+    subtitle: {
+        fontSize: '35px',
+        textAlign: 'center',
     },
     description: {
-        fontSize: '30px',
+        fontSize: '25px',
         textAlign: 'center',
     },
 
@@ -62,18 +65,21 @@ const Landing = () => {
 
     return (
 
-        <Container component='div' maxWidth='xl' className='container'>
+        // TODO el container este se pone por encima de todo,
+        // Para mantener imagen de fondo, arreglar
+        //<Container component='div' maxWidth='xl' className='container'>
             <Box component="div" className={classes.landingText}>
-                <Box component="div" className={classes.title}>
+                <Typography className={classes.title}>
                     KeyPaX
-                </Box>
-                <Box component="div" className={classes.description}>
+                </Typography>
+                <Typography className={classes.subtitle}>
+                    Gestor de contraseñas seguro
+                </Typography>
+                <Typography className={classes.description}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus. Molestie nunc non blandit massa. Mattis molestie a iaculis at erat. Dictum varius duis at consectetur lorem donec.
-                </Box>
+                </Typography>
             </Box>
-            {/*
-            */}
-        </Container>
+        //</Container>
 
     )
 }

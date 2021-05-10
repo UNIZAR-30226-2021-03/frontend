@@ -1,4 +1,4 @@
-import { Box, Container } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import keyImage from '../../resources/key-1315566.jpg';
@@ -49,7 +49,7 @@ const Integrantes = () => {
     const classes = useStyles();
 
     return (
-        <Container component='div' maxWidth='xl' className='container'>
+        //<Container component='div' maxWidth='xl' className='container'>
             <Box component="div" className={classes.integrantesText}>
                 <Box component="div" className={classes.title}>
                     Integrantes de KeyPax
@@ -58,7 +58,7 @@ const Integrantes = () => {
                     Aquí vamos a hablar sobre quienes somos...
                 </Box>
             </Box>
-        </Container>
+       //</Container>
 
     )
 }

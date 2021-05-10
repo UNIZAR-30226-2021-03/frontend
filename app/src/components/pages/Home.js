@@ -15,13 +15,31 @@ import RenameCategory from '../category/RenameCategory';
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        paddingTop: theme.spacing(10),
+        width: '100%',
+        //height: '100%',
+        //position: 'relative',
+        padding: theme.spacing(5),
         flexGrow: 1,
+        minHeight: '100%',
+        //width: '100%',
+        margin: '0',
+
+        display: 'flex',
+        position: 'relative',
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+
+        top: '0',
+    },
+    mainGrid: {
+        //padding: theme.spacing(2),
+        flexGrow: 1,
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'top',
     },
     heading: {
-        padding: theme.spacing(2),
+        //padding: theme.spacing(2),
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center'
@@ -46,6 +64,20 @@ const useStyles = makeStyles((theme) => ({
             border: '1px solid rgb(5, 125, 205)',
         }
     },
+    categoryName: {
+        padding: theme.spacing(1),
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgb(255, 255, 222)'
+    },
+    info: {
+        //padding: theme.spacing(3),
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgb(255, 255, 222)'
+    }
 
 }));
 
@@ -133,8 +165,8 @@ const Home = () => {
             // TODO network error
         }
     }
-    const refreshInfoList = async() => {
-        const response = await getInfoList(getAccessToken(),currentCategory._id)
+    const refreshInfoList = async () => {
+        const response = await getInfoList(getAccessToken(), currentCategory._id)
         if (response.status === 401) {
 
         } else if (response.status === 403) {
@@ -149,100 +181,146 @@ const Home = () => {
 
     }
 
-    /**
-     * 1. Pedir info list
-     * 2. Actualizar infoList (state)
-     * 3. Actualizar currentInfo (puede que no haya ninguna)
-     */
-
     const categoryNameRegEx = /^([a-zñA-ZÑ0-9\u0600-\u06FF\u0660-\u0669\u06F0-\u06F9 _.-]+)$/i;
 
     return (
         <Container component='main' maxWidth='xl' className={classes.container}>
             <Grid
                 container
+                spacing={2}
+                //className={classes.mainGrid}
                 direction="row"
                 justify="center"
-                alignItems="center"
-                spacing={3}
+                alignItems="stretch"
             >
                 {/** 1. CATEGORIES GRID */}
                 <Grid item xs={2}>
-                    <Grid
-                        spacing={1}
-                        container
-                        direction='column'
-                        justify='center'
-                        alignItems='center'
-                    >
-                        <CategoryList
-                            setOpenNewCategory={setOpenNewCategory}
-                            setCurrentCategory={setCurrentCategory}
-                            categoryList={categoryList}
-                        />
-
-                    </Grid>
+                    <CategoryList
+                        setOpenNewCategory={setOpenNewCategory}
+                        setCurrentCategory={setCurrentCategory}
+                        categoryList={categoryList}
+                    />
                 </Grid>
 
                 {/** 2. PASSWORD GRID */}
                 <Grid item xs={8}>
-                    {categoryList.length !== 0
-                        ?
-                        <>
-                            {/** 2.1. 1+ CATEGORIES */}
+                    <Grid
+                        container
+                        direction="column"
+                        justify="flex-start"
+                        alignItems="felx-start"
+                        spacing={1}
+                    >
+                        {categoryList.length !== 0
+                            ?
+                            <>
+                                <Grid item>
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center"
+                                        className={classes.categoryName}
+                                    >
+                                        {/** 2.1. 1+ CATEGORIES */}
+                                        {/** CURRENT CATEGORY BUTTONS */}
+                                        <Grid item xs={2}>
 
-                            {/** CURRENT CATEGORY BUTTONS */}
-                            <Typography component='div' variant='h3' align='center'>
-                                {currentCategory.name}
-                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={8}>
+                                            {/* TODO STYLE THIS */}
+                                            <Typography
+                                                component='div'
+                                                variant='h4'
+                                                align='center'>
+                                                {currentCategory.name}
+                                            </Typography>
+                                        </Grid>
 
-                            <Button fullWidth={true} onClick={() => { setOpenDeleteCategory(true) }}> Eliminar CATEGORIA - </Button>
+                                        <Grid item xs={1}>
+                                            <Button
+                                                fullWidth={true}
+                                                variant="contained"
+                                                onClick={() => { setOpenDeleteCategory(true) }}>
+                                                ELIMINAR
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={1}>
 
-                            <Button fullWidth={true} onClick={() => { setOpenRenameCategory(true) }}> Renombrar CATEGORIA X </Button>
+                                            <Button
+                                                fullWidth={true}
+                                                variant="contained"
+                                                onClick={() => { setOpenRenameCategory(true) }}> RENOMBRAR </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
 
-                            <Button fullWidth={true} color="secondary" variant="contained" onClick={() => { setOpenNewInfo(true) }}> AÑADIR CONTRASEÑA + </Button>
-                            {/** CREATE INFO */}
-                            {openNewInfo
-                                ?
-                                <CreateInfo
-                                    category={currentCategory}
-                                    setOpen={setOpenNewInfo}
-                                    refreshInfoList={refreshInfoList}>
-                                </CreateInfo>
-                                :
-                                <></>
-                            }
+                                {/** CREATE INFO */}
+                                {openNewInfo
+                                    ?
+                                    <Grid item>
+                                        <CreateInfo
+                                            category={currentCategory}
+                                            setOpen={setOpenNewInfo}
+                                            refreshInfoList={refreshInfoList}>
+                                        </CreateInfo>
+                                    </Grid>
+                                    :
+                                    <></>
+                                }
 
-                            {/** PASSWORD INFO */}
-                            {infoList.length !== 0 ?
-                                infoList.map((item) => {
-                                    return (
-                                        <Info
-                                            _id={item._id}
-                                            category_id={currentCategory._id}
-                                            name={item.name}
-                                            url={item.url}
-                                            username={item.username}
-                                            password={item.password}
-                                            description={item.description}
-                                            file={item.file}
-                                            refreshInfoList={refreshInfoList}
-                                        />
-                                    )
-                                })
-                                :
-                                ( <></> )
-                            } 
-                        </>
-                        :
-                        <>
-                            {/** 2.2. 0 CATEGORY */}
-                            <h2>
-                                Por favor, cree una primera categoría
+                                {/** PASSWORD INFO */}
+                                {/* <Grid item>
+                                    <Grid
+                                        container
+                                        direction="column"
+                                        justify="center"
+                                        alignItems="stretch"
+                                    > */}
+                                {infoList.length !== 0 ?
+                                    infoList.map((item) => {
+                                        return (
+                                            <Grid item>
+                                                <Info
+                                                    _id={item._id}
+                                                    category_id={currentCategory._id}
+                                                    name={item.name}
+                                                    url={item.url}
+                                                    username={item.username}
+                                                    password={item.password}
+                                                    description={item.description}
+                                                    file={item.file}
+                                                    refreshInfoList={refreshInfoList}
+                                                />
+                                            </Grid>
+                                        )
+                                    })
+                                    :
+                                    (<></>)
+                                }
+                                {/* </Grid>
+                                </Grid> */}
+                            </>
+                            :
+                            <>
+                                {/** 2.2. 0 CATEGORY */}
+                                <h2>
+                                    Por favor, cree una primera categoría
                             </h2>
-                            <Button fullWidth={true} onClick={() => { setOpenNewCategory(true) }}> Nueva CATEGORIA + </Button>
-                        </>
-                    }
+                                <Button fullWidth={true} onClick={() => { setOpenNewCategory(true) }}> Nueva CATEGORIA + </Button>
+                            </>
+                        }
+
+                        <Grid item xs={12}>
+
+                            <Button
+                                variant="contained"
+                                onClick={() => { setOpenNewInfo(true) }}>
+                                AÑADIR CONTRASEÑA +
+                            </Button>
+                        </Grid>
+                    </Grid>
+
                 </Grid>
 
                 {/** 3. SEARCH GRID (EMPTY) */}

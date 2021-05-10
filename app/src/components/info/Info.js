@@ -1,23 +1,25 @@
-import React, {useState, useContext,useEffect} from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import AuthContext from '../../context'
-import { Container, Grid, Button } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import { BsFillCaretDownFill,BsFillCaretUpFill,BsFileEarmarkArrowDown,BsFileEarmarkArrowUp } from "react-icons/bs";
-import { deleteInfo,renameInfo } from '../../services/Info.service'
-import { downloadFile, uploadFile, deleteFile } from '../../services/File.service'
+import { Grid, Button } from '@material-ui/core';
+import { BsFillCaretDownFill, BsFillCaretUpFill} from "react-icons/bs";
+import { deleteInfo, renameInfo } from '../../services/Info.service'
 import { makeStyles } from '@material-ui/core/styles';
-import FileDownload from 'js-file-download';
+import InfoGrid from './InfoGrid';
 
 const useStyles = makeStyles((theme) => ({
 
     file: {
         width: '100px',
         height: '100px'
-        
+
     },
     file_photo: {
         width: '50px',
         height: '50px'
+    },
+    info: {
+        padding: theme.spacing(1),
+        backgroundColor: 'rgb(255, 255, 222)'
     }
 }));
 
@@ -38,14 +40,14 @@ const Info = (props) => {
     const category_id = props.category_id
     const refreshInfoList = props.refreshInfoList;
     const file = props.file;
-    
+
     const [nameNewInfo, setNameNewInfo] = useState("")
     const [usernameNewInfo, setUsernameNewInfo] = useState("")
     const [passwordNewInfo, setPasswordNewInfo] = useState("")
     const [urlNewInfo, setUrlNewInfo] = useState("")
     const [descriptionNewInfo, setDescriptionNewInfo] = useState("")
 
-    const [onChange,setOnChange] = useState(false);
+    const [onChange, setOnChange] = useState(false);
 
     useEffect(() => {
         setNameNewInfo(name)
@@ -53,28 +55,11 @@ const Info = (props) => {
         setPasswordNewInfo(password)
         setUrlNewInfo(url)
         setDescriptionNewInfo(description)
-    })
+    }, [name, username, password, url, description])
 
-    const onChangeNameNewInfo = (e) => {
-        setNameNewInfo(e.target.value)
-    }
 
-    const onChangePasswordNewInfo = (e) => {
-        setPasswordNewInfo(e.target.value)
-
-    }
-    const onChangeUsernameNewInfo = (e) => {
-        setUsernameNewInfo(e.target.value)
-    }
-    const onChangeUrlNewInfo = (e) => {
-        setUrlNewInfo(e.target.value)
-    }
-    const onChangeDescriptionNewInfo = (e) => {
-        setDescriptionNewInfo(e.target.value)
-    }
-
-    const onHandleEdit = async() => {
-        const response = await renameInfo(getAccessToken(),nameNewInfo,usernameNewInfo,passwordNewInfo,urlNewInfo,descriptionNewInfo,category_id,_id)
+    const onHandleEdit = async () => {
+        const response = await renameInfo(getAccessToken(), nameNewInfo, usernameNewInfo, passwordNewInfo, urlNewInfo, descriptionNewInfo, category_id, _id)
 
         if (response.status === 400) {
 
@@ -91,8 +76,8 @@ const Info = (props) => {
         }
     }
 
-    const onHandleDelete = async() => {
-        const response = await deleteInfo(getAccessToken(),category_id,_id)
+    const onHandleDelete = async () => {
+        const response = await deleteInfo(getAccessToken(), category_id, _id)
         if (response.status === 400) {
 
         } else if (response.status === 401) {
@@ -108,233 +93,101 @@ const Info = (props) => {
             // TODO network error
         }
     }
-    const onHandleUpload = async(e) => {
-        const response = await uploadFile(getAccessToken(),category_id,_id,e.target.files[0])
-        if (response.status === 400) {
 
-        } else if (response.status === 401) {
-
-        } else if (response.status === 403) {
-
-        } else if (response.status === 500) {
-
-        } else if (response.status === 200) {
-            refreshInfoList()
-        } else {
-            // TODO network error
-        }
-    }
-
-    const onHandleDownload = async() => {
-        const response = await downloadFile(getAccessToken(),file.file_id)
-        if (response.status === 400) {
-
-        } else if (response.status === 401) {
-
-        } else if (response.status === 403) {
-
-        } else if (response.status === 500) {
-
-        } else if (response.status === 200) {
-            FileDownload(response.data,file.name)
-        } else {
-            // TODO network error
-        }
-    }
-
-    const onHandleDeleteFile = async() => {
-        const response = await deleteFile(getAccessToken(),category_id,_id,file.file_id)
-        if (response.status === 400) {
-
-        } else if (response.status === 401) {
-
-        } else if (response.status === 403) {
-
-        } else if (response.status === 500) {
-
-        } else if (response.status === 200) {
-            refreshInfoList()
-        } else {
-            // TODO network error
-        }
-    }
     return (
-        <Container component='main' maxWidth='xl'>
-            {onChange === false ?
-                <Container maxWidth="xl">
-                    <Grid
-                        container
-                        spacing={1}
-                        direction='row'
-                        justify='space-between'
-                        alignItems='center'
-                    >
-                        <Grid item>
-                            {nameNewInfo}
-                        </Grid>
-                        <Grid item>
-                            <Button onClick={() => setOnChange(true)}>
-                                <BsFillCaretDownFill/>
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Container>
-                
-            :  
-                <Container maxWidth="xl">
-                    <Grid
-                        container
-                        spacing={1}
-                        direction='row'
-                        justify='flex-end'
-                        alignItems='center'
-                    >
-                        <Grid item>
-                            <Button onClick={() => setOnChange(false)}>
-                                <BsFillCaretUpFill/>
-                            </Button>
-                        </Grid>
-                    </Grid>
-                    <Grid
-                        container
-                        spacing={1}
-                        direction='row'
-                        justify='center'
-                        alignItems='center'
-                    >
-                        <Grid item xs={4}>
-                            <TextField
-                                autoFocus
-                                margin="none"
-                                label="Nombre"
-                                required
-                                size="medium"
-                                name="name"
-                                autoComplete="off"
-                                onChange={onChangeNameNewInfo}
-                                value={nameNewInfo}
+        <>
+            { onChange === false ?
+                /* INFO GRID CLOSED */
 
-                            />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <TextField
-                                autoFocus
-                                margin="none"
-                                label="Contraseña"
-                                required
-                                size="medium"
-                                name="password"
-                                type="password"
-                                autoComplete="off"
-                                onChange={onChangePasswordNewInfo}
-                                value={passwordNewInfo}
-                            />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <TextField
-                                autoFocus
-                                margin="none"
-                                label="Usuario"
-                                required
-                                size="medium"
-                                name="name"
-                                autoComplete="off"
-                                onChange={onChangeUsernameNewInfo}
-                                value={usernameNewInfo}
-                            />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <TextField
-                                autoFocus
-                                margin="none"
-                                label="URL"
-                                required
-                                size="medium"
-                                name="name"
-                                autoComplete="off"
-                                onChange={onChangeUrlNewInfo}
-                                value={urlNewInfo}
-                            />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <TextField
-                                autoFocus
-                                margin="none"
-                                label="Descripción"
-                                size="medium"
-                                name="name"
-                                autoComplete="off"
-                                onChange={onChangeDescriptionNewInfo}
-                                value={descriptionNewInfo}
-                            />
-                        </Grid>
+                <Grid
+                    container
+                    className={classes.info}
+                    //spacing={1}
+                    direction='row'
+                    justify='space-between'
+                    alignItems='center'
+                >
+                    <Grid item>
+                        {nameNewInfo}
                     </Grid>
-                    { file === undefined ?
-                        <Grid container
-                            spacing={2}
-                            direction='column'
-                            justify='center'
-                            alignItems='center'>
-                            <Grid item
-                                fullWidth={true} >
-                                <Button
-                                    className={classes.file}
-                                    variant="contained"
-                                    component="label"
-                                    onChange={onHandleUpload}
-                                    >
-                                      <BsFileEarmarkArrowUp className={classes.file_photo}/>
-                                      <input
-                                        type="file"
-                                        hidden
-                                      />
-                                </Button>
-                            </Grid>
-                            <Grid item
-                                fullWidth={true} >
-                                SUBIR ARCHIVO
-                            </Grid>
-                        </Grid>
-                        :
-                        <Grid container
-                            spacing={0}
-                            direction='column'
-                            justify='center'
-                            alignItems='center'>
-                            <Grid item
-                                fullWidth={true} >
-                                <Button 
-                                    variant="contained"
-                                    component="label"
-                                    onClick={onHandleDownload}
-                                    className={classes.file}>
-                                    <BsFileEarmarkArrowDown className={classes.file_photo}/>
-                                </Button>
-                            </Grid>
-                            <Grid item
-                                fullWidth={true} >
-                                {file.name}
-                            </Grid>
-                            <Grid item>
-                                <Button fullWidth={true} color="secondary" variant="contained" onClick={onHandleDeleteFile}> BORRAR</Button>
-                            </Grid>
-                        </Grid>
-                    }
+                    <Grid item>
+                        <Button
+                            onClick={() => setOnChange(true)}
+                            variant="contained"
+                        >
+                            <BsFillCaretDownFill />
+                        </Button>
+                    </Grid>
+                </Grid>
+
+                :
+                /* INFO GRID OPENED */
+
+                <Grid
+                    container
+                    className={classes.info}
+                    //spacing={3}
+                    direction='row'
+                    justify='flex-end'
+                    alignItems='stretch'
+                >
+                    <Grid item>
+                        <Button
+                            onClick={() => setOnChange(false)}
+                            variant="contained"
+                        >
+                            <BsFillCaretUpFill />
+                        </Button>
+                    </Grid>
+
+                    <Grid item>
+                        <InfoGrid
+                            name={nameNewInfo}
+                            username={usernameNewInfo}
+                            password={passwordNewInfo}
+                            url={urlNewInfo}
+                            description={descriptionNewInfo}
+                            setName={setNameNewInfo}
+                            setUsername={setUsernameNewInfo}
+                            setPassword={setPasswordNewInfo}
+                            setUrl={setUrlNewInfo}
+                            setDescription={setDescriptionNewInfo}
+                            showFile={true}
+                            _id={_id}
+                            category_id={category_id}
+                            refreshInfoList={refreshInfoList}
+                            file={file}
+                        />
+                    </Grid>
+
+                    {/* BUTTONs  */}
                     <Grid container
                         spacing={1}
                         direction='row'
                         justify='center'
                         alignItems='center'>
+
                         <Grid item xs={2}>
-                            <Button fullWidth={true} color="secondary" variant="contained" onClick={onHandleEdit}> EDITAR</Button>
+                            <Button
+                                fullWidth={true}
+                                variant="contained"
+                                onClick={onHandleDelete}>
+                                ELIMINAR
+                            </Button>
                         </Grid>
+
                         <Grid item xs={2}>
-                            <Button fullWidth={true} color="secondary" variant="contained" onClick={onHandleDelete}> ELIMIAR </Button>
+                            <Button
+                                fullWidth={true}
+                                variant="contained"
+                                onClick={onHandleEdit}>
+                                EDITAR
+                            </Button>
                         </Grid>
                     </Grid>
-                </Container>
+                </Grid>
             }
-        </Container>
+        </>
     )
 }
 

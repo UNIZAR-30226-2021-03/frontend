@@ -1,12 +1,12 @@
 .container {
-    /* The image used */
-    background-image: url(../../resources/key-1315566.jpg);
-
+    
     /* Full height */
     min-height: 100vh;
     /*width: 100%; */
     margin: 0;
-
+    
+    /* The image used */
+    background-image: url(../../resources/key-1315566.jpg);
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;

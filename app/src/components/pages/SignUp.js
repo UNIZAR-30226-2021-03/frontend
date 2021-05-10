@@ -49,6 +49,12 @@ const useStyles = makeStyles((theme) => ({
       border: '1px solid rgb(5, 125, 205)',
     }
   },
+  form: {
+    padding: theme.spacing(5),
+    backgroundColor: 'rgb(255,255,255)',
+    border: '2px solid rgb(232, 238, 241)',
+    borderRadius: '10px',
+  }
 
 }));
 
@@ -179,8 +185,8 @@ const LogIn = () => {
         >
           <Grid item xs={12}>
             <Typography component="h1" variant="h3" className={classes.welcome}>
-              [Message]
-              </Typography>
+              Bienvenido!
+            </Typography>
           </Grid>
         </Grid>
 
@@ -219,7 +225,6 @@ const LogIn = () => {
                 label="Correo Electrónico"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 onChange={onChangeMail}
                 value={mail}
                 error={errorMail || failAuthEmail}

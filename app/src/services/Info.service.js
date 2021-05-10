@@ -1,7 +1,6 @@
 import axios from 'axios'
 import Routes from './Routes.js'
 
-
 const createInfo = async (accessToken, name, username, password, url, description, category_id) => {
     try {
         const config = {
@@ -9,7 +8,20 @@ const createInfo = async (accessToken, name, username, password, url, descriptio
                 accessToken
             }
         }
-        const body = { name, username, password, url, description, category_id }
+        
+        const body = {
+            name,
+            username,
+            password,
+            category_id
+        }
+        if (url !== null) {
+            body.url = url
+        }
+        if (description !== null) {
+            body.description = description
+        }
+
         const response = await axios.post(Routes.URL_INFO, body, config)
         console.log("--- CODE " + response.status + ": !")
         return {

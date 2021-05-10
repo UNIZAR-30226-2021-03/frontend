@@ -1,9 +1,10 @@
 .container {
     margin-top: auto;
-    background-color: rgb(30, 61, 88);
+    background-color:rgb(5, 125, 205);
     color: rgb(232, 238, 241);
     padding: 3em;
-    position: absolute;
+    display: flex;
+    position: relative;
     bottom: 0;
     margin-bottom: 0;
   }

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(10),
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   welcome: {
     padding: theme.spacing(5),
@@ -50,6 +50,12 @@ const useStyles = makeStyles((theme) => ({
       border: '1px solid rgb(5, 125, 205)',
     }
   },
+  form: {
+    padding: theme.spacing(5),
+    backgroundColor: 'rgb(255,255,255)',
+    border: '2px solid rgb(232, 238, 241)',
+    borderRadius: '10px',
+  }
 
 }));
 
@@ -184,8 +190,8 @@ const LogIn = () => {
         >
           <Grid item xs={12}>
             <Typography component="h1" variant="h3" className={classes.welcome}>
-              Welcome!
-              </Typography>
+            Hola!  
+            </Typography>
           </Grid>
         </Grid>
 
