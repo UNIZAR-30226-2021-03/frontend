@@ -9,7 +9,7 @@ const createInfo = async (accessToken, name, username, password, url, descriptio
             }
         }
         
-        const body = {
+        var body = {
             name,
             username,
             password,
