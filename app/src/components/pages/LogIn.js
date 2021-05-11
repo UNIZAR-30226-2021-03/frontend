@@ -167,7 +167,8 @@ const LogIn = () => {
       // TODO informar al usuario del error
       setFailAuth2FA(true)
     } else if (response.status === 200) {
-      logInToken(response.data.accessToken)
+      logInToken(response.data)
+      
       setOpen2FA(false)
       console.log('Redirecting to home...')
       history.push('/home')

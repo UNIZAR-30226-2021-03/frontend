@@ -13,19 +13,22 @@ import {generatePassword} from './helpers/password.helper'
 const App = () => {
 
   const [accessToken, setAccessToken] = useState(null)
+  const [nickname, setNickname] = useState(null)
 
   useEffect(() => {
     const password = generatePassword(16,true,true,true,"_-.");
     console.log(password)
     setAccessToken(localStorage.getItem('accessToken'))
+    setAccessToken(localStorage.getItem('nickname'))
   }, [])
 
   const authContext = useMemo(() => ({
-    logInToken: (accessToken) => {
-      // TODO se puede guardar nombre...
+    logInToken: (data) => {
       try {
         localStorage.setItem('accessToken', accessToken)
-        setAccessToken(accessToken)
+        localStorage.setItem('nickname', nickname)
+        setAccessToken(data.accessToken)
+        setNickname(data.nickname)
       } catch (err) {
         console.log(err)
       }
@@ -33,11 +36,16 @@ const App = () => {
     getAccessToken: () => {
       return accessToken
     },
+    getNickname: () => {
+      return nickname
+    },
     signOutToken: () => {
       setAccessToken(null)
+      setNickname(null)
       localStorage.removeItem('accessToken')
+      localStorage.removeItem('nickname')
     }
-  }), [accessToken])
+  }), [accessToken, nickname])
 
   //Utilizamos switch para que renderize solo el componente con el path exacto
   return (

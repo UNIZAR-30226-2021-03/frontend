@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { NavbarItems } from './NavbarItems';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import AuthContext from '../../context'
+import { Typography } from '@material-ui/core';
 
 //Navbar con menú para vista desde web browser móvil:
 //Fas fa-times y fa-bars iconos exportados desde fontawesome, ver index.html
@@ -12,9 +13,12 @@ import AuthContext from '../../context'
 
 const NavbarPrivate = (props) => {
 
+  const [nickname, setNickname] = useState("nada")
+
   const [clicked, setClicked] = useState(false);
   const handleClick = () => setClicked(!clicked);
 
+  const { getNickname } = useContext(AuthContext)
 
   const { signOutToken } = useContext(AuthContext)
 
@@ -22,6 +26,10 @@ const NavbarPrivate = (props) => {
     signOutToken()
   };
 
+  useEffect(() => {
+    setNickname(getNickname())
+    console.log(getNickname())
+  },[getNickname()])
   const mainLink = '/home'
 
   return (
@@ -37,6 +45,10 @@ const NavbarPrivate = (props) => {
 
         <div className='menu-icon' onClick={handleClick}>
           <i className={clicked ? 'fas fa-times' : 'fas fa-bars'} />
+        </div>
+
+        <div className="navbar-logo navbar-logo-name">
+            Bienvenido {nickname}
         </div>
 
         <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
