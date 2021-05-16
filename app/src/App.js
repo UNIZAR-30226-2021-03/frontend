@@ -9,35 +9,39 @@ import NavbarPublic from './components/navbar/NavbarPublic';
 import Footer from './components/footer/Footer';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import AuthContext from './context.js'
-import {generatePassword} from './helpers/password.helper'
+import { generatePassword } from './helpers/password.helper'
 const App = () => {
 
   const [accessToken, setAccessToken] = useState(null)
   const [nickname, setNickname] = useState(null)
 
   useEffect(() => {
-    const password = generatePassword(16,true,true,true,"_-.");
+    const password = generatePassword(16, true, true, true, "_-.");
     console.log(password)
-    setAccessToken(localStorage.getItem('accessToken'))
-    setAccessToken(localStorage.getItem('nickname'))
-  }, [])
+    if (localStorage.getItem('accessToken') !== null) {
+      setAccessToken(localStorage.getItem('accessToken'))
+      setNickname(localStorage.getItem('nickname'))
+    }
+
+  })
 
   const authContext = useMemo(() => ({
     logInToken: (data) => {
       try {
-        localStorage.setItem('accessToken', accessToken)
-        localStorage.setItem('nickname', nickname)
+        localStorage.setItem('accessToken', data.accessToken)
+        localStorage.setItem('nickname', data.nickname)
         setAccessToken(data.accessToken)
         setNickname(data.nickname)
       } catch (err) {
-        console.log(err)
       }
     },
     getAccessToken: () => {
       return accessToken
+      //return accessToken
     },
     getNickname: () => {
       return nickname
+      //return nickname
     },
     signOutToken: () => {
       setAccessToken(null)
@@ -69,9 +73,9 @@ const App = () => {
             {/** PRIVATE */}
             <NavbarPrivate />
             <Switch>
-            <Route path='/integrantes' exact component={Integrantes}></Route>
+              <Route path='/integrantes' exact component={Integrantes}></Route>
               <Route path='/home' default component={Home}></Route>
-              <Route path='/' exact ><Redirect to={{pathname:'/home'}}/></Route>
+              <Route path='/' exact ><Redirect to={{ pathname: '/home' }} /></Route>
             </Switch>
           </>
         }

@@ -1,15 +1,18 @@
 import React from 'react'
-import { Button, Container, Grid } from '@material-ui/core';
+import { Button, Container, Grid } from '@material-ui/core'
+import { BsPlus } from "react-icons/bs";
 
 const CategoryList = (props) => {
 
     // TODO mejor manera de pasar estos estados (atributo+setter)
-    const setOpenNewCategory = props.setOpenNewCategory;
-    const setCurrentCategory = props.setCurrentCategory;
-    const categoryList = props.categoryList;
+    const setOpenNewCategory = props.setOpenNewCategory
+    const setOpenNewInfo = props.setOpenNewInfo
+    const setCurrentCategory = props.setCurrentCategory
+    const categoryList = props.categoryList
 
     const handleChangeCategory = (item) => {
         setCurrentCategory({ name: item.name, _id: item._id })
+        setOpenNewInfo(false)
         console.log("Change to " + item.name)
     }
 
@@ -47,7 +50,7 @@ const CategoryList = (props) => {
                         onClick={() => {
                             setOpenNewCategory(true)
                         }}>
-                        Nueva CATEGORIA +
+                        <BsPlus/>
                     </Button>
                 </Grid>
             </Grid>
@@ -55,4 +58,4 @@ const CategoryList = (props) => {
     )
 }
 
-export default CategoryList;
+export default CategoryList

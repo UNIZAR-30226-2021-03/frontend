@@ -159,7 +159,7 @@ const LogIn = () => {
 
   const handle2FA = async () => {
     // TODO implementar numero de intentos para introducir correctamente el codigo (por ahora infinitas)
-    console.log(loginToken)
+    console.log("loginToken:",loginToken)
 
     const response = await send2FA(loginToken, code2FA)
     if (response.status === 401) {
@@ -167,9 +167,9 @@ const LogIn = () => {
       // TODO informar al usuario del error
       setFailAuth2FA(true)
     } else if (response.status === 200) {
-      logInToken(response.data)
-      
-      setOpen2FA(false)
+        console.log("2fa token: ", response.data)
+        logInToken(response.data)
+        setOpen2FA(false)
       console.log('Redirecting to home...')
       history.push('/home')
     } else {

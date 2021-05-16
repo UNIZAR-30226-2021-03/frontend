@@ -1,22 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
 import AuthContext from '../../context'
 import { Grid, Button } from '@material-ui/core';
-import { BsFillCaretDownFill, BsFillCaretUpFill} from "react-icons/bs";
+import { BsFillCaretDownFill, BsFillCaretUpFill, BsClipboardData, BsFillEyeFill } from "react-icons/bs";
 import { deleteInfo, renameInfo } from '../../services/Info.service'
 import { makeStyles } from '@material-ui/core/styles';
 import InfoGrid from './InfoGrid';
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 const useStyles = makeStyles((theme) => ({
-
-    file: {
-        width: '100px',
-        height: '100px'
-
-    },
-    file_photo: {
-        width: '50px',
-        height: '50px'
-    },
     info: {
         padding: theme.spacing(1),
         backgroundColor: 'rgb(255, 255, 222)'
@@ -47,7 +38,16 @@ const Info = (props) => {
     const [urlNewInfo, setUrlNewInfo] = useState("")
     const [descriptionNewInfo, setDescriptionNewInfo] = useState("")
 
-    const [onChange, setOnChange] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const [errorName, setErrorName] = useState(false)
+    const [errorPassword, setErrorPassword] = useState(false)
+    const [errorUsername, setErrorUsername] = useState(false)
+    const [errorUrl, setErrorUrl] = useState(false)
+    const [errorDescription, setErrorDescription] = useState(false)
+
+    const [passwordType, setPasswordType] = useState(true)
+
 
     useEffect(() => {
         setNameNewInfo(name)
@@ -55,6 +55,14 @@ const Info = (props) => {
         setPasswordNewInfo(password)
         setUrlNewInfo(url)
         setDescriptionNewInfo(description)
+
+        return function cleanup() {
+            setNameNewInfo("")
+            setUsernameNewInfo("")
+            setPasswordNewInfo("")
+            setUrlNewInfo("")
+            setDescriptionNewInfo("")
+        }
     }, [name, username, password, url, description])
 
 
@@ -70,6 +78,7 @@ const Info = (props) => {
         } else if (response.status === 500) {
 
         } else if (response.status === 200) {
+            setOpen(false)
             refreshInfoList()
         } else {
             // TODO network error
@@ -88,15 +97,23 @@ const Info = (props) => {
 
         } else if (response.status === 200) {
             refreshInfoList()
-            setOnChange(false);
+            setOpen(false);
         } else {
             // TODO network error
         }
     }
 
+    const handleShowPassword = () => {
+        if (passwordType) {
+            setPasswordType(false)
+        } else {
+            setPasswordType(true)
+        }
+    }
+
     return (
         <>
-            { onChange === false ?
+            { open === false ?
                 /* INFO GRID CLOSED */
 
                 <Grid
@@ -104,16 +121,48 @@ const Info = (props) => {
                     className={classes.info}
                     //spacing={1}
                     direction='row'
-                    justify='space-between'
+                    justify='flex-end'
                     alignItems='center'
                 >
-                    <Grid item>
+                    <Grid item xs={2}>
                         {nameNewInfo}
                     </Grid>
-                    <Grid item>
+                    <Grid item xs={2}>
+                        {passwordType ?
+                            <>
+                                ***
+                            </>
+                            :
+                            <>
+                                {password}
+                            </>
+                        }
+                    </Grid>
+                    <Grid item xs={1}>
                         <Button
-                            onClick={() => setOnChange(true)}
+                            onClick={handleShowPassword}
                             variant="contained"
+                            size="large">
+                            <BsFillEyeFill />
+                        </Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <CopyToClipboard text={password}>
+                            <Button
+                                variant="contained"
+                                size="large">
+                                <BsClipboardData />
+                            </Button>
+                        </CopyToClipboard>
+                    </Grid>
+                    <Grid item xs={5}>
+
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button
+                            onClick={() => setOpen(true)}
+                            variant="contained"
+                            size="large"
                         >
                             <BsFillCaretDownFill />
                         </Button>
@@ -131,16 +180,29 @@ const Info = (props) => {
                     justify='flex-end'
                     alignItems='stretch'
                 >
-                    <Grid item>
-                        <Button
-                            onClick={() => setOnChange(false)}
-                            variant="contained"
-                        >
-                            <BsFillCaretUpFill />
-                        </Button>
+                    <Grid item xs={12}>
+                        <Grid
+                            container
+                            className={classes.info}
+                            //spacing={1}
+                            direction='row'
+                            justify='flex-end'
+                            alignItems='flex-end'>
+                            <Grid item xs={11}>
+                            </Grid>
+                            <Grid item xs={1}>
+                                <Button
+                                    onClick={() => setOpen(false)}
+                                    variant="contained"
+                                    size="large"
+                                >
+                                    <BsFillCaretDownFill />
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </Grid>
 
-                    <Grid item>
+                    <Grid item xs={12}>
                         <InfoGrid
                             name={nameNewInfo}
                             username={usernameNewInfo}
@@ -157,6 +219,16 @@ const Info = (props) => {
                             category_id={category_id}
                             refreshInfoList={refreshInfoList}
                             file={file}
+                            errorName={errorName}
+                            setErrorName={setErrorName}
+                            errorPassword={errorPassword}
+                            setErrorPassword={setErrorPassword}
+                            errorUsername={errorUsername}
+                            setErrorUsername={setErrorUsername}
+                            errorUrl={errorUrl}
+                            setErrorUrl={setErrorUrl}
+                            errorDescription={errorDescription}
+                            setErrorDescription={setErrorDescription}
                         />
                     </Grid>
 

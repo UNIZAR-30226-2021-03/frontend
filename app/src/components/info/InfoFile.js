@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import AuthContext from '../../context'
 import { Container, Grid, Button } from '@material-ui/core';
-import {BsFileEarmarkArrowDown, BsFileEarmarkArrowUp } from "react-icons/bs";
+import { BsFileEarmarkArrowDown, BsFileEarmarkArrowUp } from "react-icons/bs";
 import { downloadFile, uploadFile, deleteFile } from '../../services/File.service'
 import { makeStyles } from '@material-ui/core/styles';
 import FileDownload from 'js-file-download';
@@ -93,10 +93,10 @@ const InfoFile = (props) => {
                     direction='column'
                     justify='center'
                     alignItems='center'>
-                    <Grid item
-                        fullWidth={true} >
+                    <Grid item>
                         <Button
                             className={classes.file}
+                            fullWidth={true}
                             variant="contained"
                             component="label"
                             onChange={onHandleUpload}
@@ -108,10 +108,9 @@ const InfoFile = (props) => {
                             />
                         </Button>
                     </Grid>
-                    <Grid item
-                        fullWidth={true} >
+                    <Grid item >
                         SUBIR ARCHIVO
-                            </Grid>
+                    </Grid>
                 </Grid>
                 :
 
@@ -121,8 +120,7 @@ const InfoFile = (props) => {
                     direction='column'
                     justify='center'
                     alignItems='center'>
-                    <Grid item
-                        fullWidth={true} >
+                    <Grid item >
                         <Button
                             variant="contained"
                             component="label"
@@ -131,8 +129,7 @@ const InfoFile = (props) => {
                             <BsFileEarmarkArrowDown className={classes.file_photo} />
                         </Button>
                     </Grid>
-                    <Grid item
-                        fullWidth={true} >
+                    <Grid item >
                         {file.name}
                     </Grid>
                     <Grid item>

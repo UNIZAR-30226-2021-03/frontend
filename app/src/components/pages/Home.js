@@ -1,7 +1,13 @@
 import AuthContext from '../../context'
 import React, { useEffect, useState, useContext } from 'react'
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputBase from '@material-ui/core/InputBase';
 import { Button, Container, Grid } from '@material-ui/core';
 import getCategoryList from '../../services/CategoryList.service'
 import getInfoList from '../../services/InfoList.service'
@@ -10,6 +16,7 @@ import CreateInfo from '../info/CreateInfo'
 import CategoryList from '../category/CategoryList'
 import CreateCategory from '../category/CreateCategory'
 import DeleteCategory from '../category/DeleteCategory'
+import { BsFillTrashFill, BsPencil, BsPlus } from "react-icons/bs";
 
 import RenameCategory from '../category/RenameCategory';
 
@@ -77,13 +84,16 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgb(255, 255, 222)'
-    }
+    },
+    margin: {
+        margin: theme.spacing(1),
+    },
 
 }));
 
 const Home = () => {
 
-    const { getAccessToken } = useContext(AuthContext)
+    const { getAccessToken, signOutToken } = useContext(AuthContext)
 
     const classes = useStyles();
 
@@ -94,17 +104,17 @@ const Home = () => {
     const [openDeleteCategory, setOpenDeleteCategory] = useState(false)
     const [openRenameCategory, setOpenRenameCategory] = useState(false)
 
+    const [orderInfo, setOrderInfo] = useState("date")
 
     const [infoList, setInfoList] = useState([{}])
 
     const [openNewInfo, setOpenNewInfo] = useState(false)
 
-    // TODO arreglar esto
     useEffect(() => {
         async function loadCategoryList() {
             const response = await getCategoryList(getAccessToken())
             if (response.status === 401) {
-
+                signOutToken()
             } else if (response.status === 403) {
 
             } else if (response.status === 500) {
@@ -119,25 +129,30 @@ const Home = () => {
             }
         }
         loadCategoryList()
-    }, [getAccessToken])
+    }, [getAccessToken, signOutToken])
 
     useEffect(() => {
         async function loadInfoList() {
-            console.log(currentCategory.name)
+            console.log("currCategory: ", currentCategory.name)
             const response = await getInfoList(getAccessToken(), currentCategory._id);
             if (response.status === 401) {
+                signOutToken()
             } else if (response.status === 403) {
 
             } else if (response.status === 500) {
 
             } else if (response.status === 200) {
-                setInfoList(response.data)
+                const info = sortData(response.data)
+                setInfoList(info)
+                console.log(info)
             } else {
                 // TODO network error
             }
         }
         loadInfoList()
-    }, [getAccessToken, currentCategory])
+    }, [getAccessToken, currentCategory, signOutToken])
+
+
 
     const refreshCategory = async (action) => {
         const response = await getCategoryList(getAccessToken())
@@ -165,7 +180,7 @@ const Home = () => {
             // TODO network error
         }
     }
-    const refreshInfoList = async () => {
+    const refreshInfoList = async (orderInfo) => {
         const response = await getInfoList(getAccessToken(), currentCategory._id)
         if (response.status === 401) {
 
@@ -174,14 +189,82 @@ const Home = () => {
         } else if (response.status === 500) {
 
         } else if (response.status === 200) {
-            setInfoList(response.data)
+            const info = sortData(response.data, orderInfo)
+            setInfoList(info)
+            console.log(info)
         } else {
             // TODO network error
         }
 
     }
 
+    const sortData = (data, orderInfo) => {
+        console.log("Sorting by", orderInfo)
+        if (orderInfo === "name") {
+            data.sort((a, b) => {
+                let fa = a.name.toLowerCase(),
+                    fb = b.name.toLowerCase()
+
+                if (fa < fb) {
+                    return -1
+                } else if (fa > fb) {
+                    return 1
+                } else {
+                    return 0
+                }
+            })
+        } else if (orderInfo == "date") {
+            data.sort((a, b) => {
+                let da = new Date(a.creation_date),
+                    db = new Date(b.creation_date);
+                return da - db;
+            });
+        }
+        return data
+    }
+
+    const handleChangeOrder = (e) => {
+        console.log(orderInfo)
+        setOrderInfo(e.target.value)
+        refreshInfoList(e.target.value)
+    }
+
     const categoryNameRegEx = /^([a-zñA-ZÑ0-9\u0600-\u06FF\u0660-\u0669\u06F0-\u06F9 _.-]+)$/i;
+
+    const BootstrapInput = withStyles((theme) => ({
+        root: {
+            'label + &': {
+                marginTop: theme.spacing(3),
+            },
+        },
+        input: {
+            borderRadius: 4,
+            position: 'relative',
+            backgroundColor: theme.palette.background.paper,
+            border: '1px solid #ced4da',
+            fontSize: 16,
+            padding: '10px 26px 10px 12px',
+            transition: theme.transitions.create(['border-color', 'box-shadow']),
+            // Use the system font instead of the default Roboto font.
+            fontFamily: [
+                '-apple-system',
+                'BlinkMacSystemFont',
+                '"Segoe UI"',
+                'Roboto',
+                '"Helvetica Neue"',
+                'Arial',
+                'sans-serif',
+                '"Apple Color Emoji"',
+                '"Segoe UI Emoji"',
+                '"Segoe UI Symbol"',
+            ].join(','),
+            '&:focus': {
+                borderRadius: 4,
+                borderColor: '#80bdff',
+                boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+            },
+        },
+    }))(InputBase);
 
     return (
         <Container component='main' maxWidth='xl' className={classes.container}>
@@ -197,6 +280,7 @@ const Home = () => {
                 <Grid item xs={2}>
                     <CategoryList
                         setOpenNewCategory={setOpenNewCategory}
+                        setOpenNewInfo={setOpenNewInfo}
                         setCurrentCategory={setCurrentCategory}
                         categoryList={categoryList}
                     />
@@ -208,7 +292,7 @@ const Home = () => {
                         container
                         direction="column"
                         justify="flex-start"
-                        alignItems="felx-start"
+                        alignItems="stretch"
                         spacing={1}
                     >
                         {categoryList.length !== 0
@@ -239,18 +323,55 @@ const Home = () => {
 
                                         <Grid item xs={1}>
                                             <Button
-                                                fullWidth={true}
+                                                size="large"
+                                                /* fullWidth={true} */
                                                 variant="contained"
                                                 onClick={() => { setOpenDeleteCategory(true) }}>
-                                                ELIMINAR
+                                                <BsFillTrashFill />
                                             </Button>
                                         </Grid>
                                         <Grid item xs={1}>
 
                                             <Button
-                                                fullWidth={true}
+                                                size="large"
+                                                /* fullWidth={true} */
                                                 variant="contained"
-                                                onClick={() => { setOpenRenameCategory(true) }}> RENOMBRAR </Button>
+                                                onClick={() => { setOpenRenameCategory(true) }}>
+                                                <BsPencil />
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid item>
+                                    <Grid container
+                                        direction="row"
+                                        justify="stretch"
+                                        alignItems="center">
+                                        <Grid item xs={2}>
+                                            <Button
+                                                size="large"
+                                                fullWidth={true} variant="contained"
+                                                onClick={() => { setOpenNewInfo(true) }}>
+                                                CREATE INFO
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={8}></Grid>
+                                        <Grid item xs={2}>
+
+                                            <FormControl className={classes.margin}>
+                                                <InputLabel htmlFor="demo-customized-select-native">Ordenación</InputLabel>
+                                                <NativeSelect
+                                                    id="demo-customized-select-native"
+                                                    value={orderInfo}
+                                                    onChange={handleChangeOrder}
+                                                    input={<BootstrapInput />}
+                                                >
+                                                    <option value={"name"}>Nombre</option>
+                                                    <option value={"date"}>Fecha de creación</option>
+
+                                                </NativeSelect>
+                                            </FormControl>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -270,13 +391,6 @@ const Home = () => {
                                 }
 
                                 {/** PASSWORD INFO */}
-                                {/* <Grid item>
-                                    <Grid
-                                        container
-                                        direction="column"
-                                        justify="center"
-                                        alignItems="stretch"
-                                    > */}
                                 {infoList.length !== 0 ?
                                     infoList.map((item) => {
                                         return (
@@ -298,31 +412,45 @@ const Home = () => {
                                     :
                                     (<></>)
                                 }
-                                {/* </Grid>
-                                </Grid> */}
                             </>
                             :
                             <>
                                 {/** 2.2. 0 CATEGORY */}
-                                <h2>
-                                    Por favor, cree una primera categoría
-                            </h2>
-                                <Button fullWidth={true} onClick={() => { setOpenNewCategory(true) }}> Nueva CATEGORIA + </Button>
+                                <Grid
+                                    container
+                                    className={classes.info}
+                                    spacing={1}
+                                    direction='row'
+                                    justify='flex-end'
+                                    alignItems='center'
+                                    className={classes.info}
+                                >
+                                    <Grid item xs={7}>
+                                        <Typography
+                                            component='div'
+                                            variant='h5'
+                                            align='center'
+                                        >
+                                            Por favor, cree una primera categoría
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={2}>
+
+                                    </Grid>
+                                    <Grid item xs={3}>
+                                        <Button
+                                            onClick={() => { setOpenNewCategory(true) }}
+                                            variant="contained"
+                                            size="large"
+                                        >
+                                            <BsPlus />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             </>
                         }
-
-                        <Grid item xs={12}>
-
-                            <Button
-                                variant="contained"
-                                onClick={() => { setOpenNewInfo(true) }}>
-                                AÑADIR CONTRASEÑA +
-                            </Button>
-                        </Grid>
                     </Grid>
-
                 </Grid>
-
                 {/** 3. SEARCH GRID (EMPTY) */}
                 <Grid item xs={2}>
 
@@ -356,7 +484,6 @@ const Home = () => {
                     categoryNameRegEx={categoryNameRegEx}
                     refreshCategory={refreshCategory}
                 />
-
             </Grid>
         </Container>
     )

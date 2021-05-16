@@ -8,17 +8,16 @@ const createInfo = async (accessToken, name, username, password, url, descriptio
                 accessToken
             }
         }
-        
         var body = {
             name,
             username,
             password,
             category_id
         }
-        if (url !== null) {
+        if (url !== "") {
             body.url = url
         }
-        if (description !== null) {
+        if (description !== "") {
             body.description = description
         }
 
@@ -67,15 +66,21 @@ const renameInfo = async (accessToken, name, username, password, url, descriptio
                 accessToken
             }
         }
-        const body = {
+        var body = {
             name,
             password,
             username,
-            url,
-            description,
             category_id,
             info_id,
         }
+
+        if (url !== "") {
+            body.url = url
+        }
+        if (description !== "") {
+            body.description = description
+        }
+
         const response = await axios.put(Routes.URL_INFO, body, config)
         console.log("--- CODE " + response.status + ": !")
         return {
