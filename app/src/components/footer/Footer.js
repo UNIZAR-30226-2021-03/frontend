@@ -34,12 +34,12 @@ export default function StickyFooter() {
           >
             <Grid item xs={12}>
             <Typography variant="h6">
-              Quiénes somos
+              Conócenos
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Link to='/integrantes' className="link">
-                Integrantes
+               Quiénes somos
               </Link>
             </Grid>
           </Grid>
