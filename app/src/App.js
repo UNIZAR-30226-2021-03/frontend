@@ -3,7 +3,7 @@ import Home from './components/pages/Home';
 import LogIn from './components/pages/LogIn';
 import SignUp from './components/pages/SignUp';
 import Landing from './components/pages/Landing';
-import Integrantes from './components/pages/Integrantes';
+import Quienes_somos from './components/pages/quienes_somos';
 import NavbarPrivate from './components/navbar/NavbarPrivate';
 import NavbarPublic from './components/navbar/NavbarPublic';
 import Footer from './components/footer/Footer';
@@ -64,7 +64,7 @@ const App = () => {
             <Switch>
               <Route path='/login' exact component={LogIn}></Route>
               <Route path='/signup' exact component={SignUp}></Route>
-              <Route path='/integrantes' exact component={Integrantes}></Route>
+              <Route path='/quienes_somos' exact component={Quienes_somos}></Route>
               <Route path='/' default component={Landing}></Route>
             </Switch>
           </>
@@ -73,7 +73,7 @@ const App = () => {
             {/** PRIVATE */}
             <NavbarPrivate />
             <Switch>
-              <Route path='/integrantes' exact component={Integrantes}></Route>
+              <Route path='/quienes_somos' exact component={Quienes_somos}></Route>
               <Route path='/home' default component={Home}></Route>
               <Route path='/' exact ><Redirect to={{ pathname: '/home' }} /></Route>
             </Switch>

@@ -24,7 +24,7 @@ export default function StickyFooter() {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Link to='/integrantes' className="link">
+              <Link to='/quienes_somos' className="link">
                Quiénes somos
               </Link>
             </Grid>

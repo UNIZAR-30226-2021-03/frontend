@@ -1,11 +1,9 @@
 import { Box, Tab } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import keyImage from '../../resources/key-1315566.jpg';
-import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
-    integrantesText: {
+    quienes_somosText: {
         textAlign: 'center',
         position: 'fixed',
         top: '15%',
@@ -28,12 +26,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Integrantes = () => {
+const Quienes_somos = () => {
 
     const classes = useStyles();
 
     return (
-        <Box component="div" className={classes.integrantesText}>
+        <Box component="div" className={classes.quienes_somosText}>
             <Box component="div" className={classes.title}>
             Quiénes somos
             </Box>
@@ -57,4 +55,4 @@ const Integrantes = () => {
     )
 }
 
-export default Integrantes;
+export default Quienes_somos;
