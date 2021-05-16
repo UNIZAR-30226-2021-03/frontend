@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 COPY ./app/package.json /usr/src/app/package.json
 #RUN npm install react-scripts -g --silent
 # da error CRITICAL a veces si a veces no
-RUN npm install -g npm@7.9.0
+RUN npm install -g npm
 RUN npm install --silent
 COPY ./app /usr/src/app
 RUN ls /usr/src/app
