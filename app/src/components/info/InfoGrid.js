@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
@@ -11,7 +11,6 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import { BsForwardFill, BsFillEyeFill } from "react-icons/bs"
 import { generatePassword } from '../../helpers/password.helper'
-import { EmojiTransportation } from '@material-ui/icons'
 
 const InfoGrid = (props) => {
 
@@ -43,7 +42,6 @@ const InfoGrid = (props) => {
     const errorDescription = props.errorDescription
     const setErrorDescription = props.setErrorDescription
 
-    const [lowerGen, setLowerGen] = useState(true)
     const [upperGen, setUpperGen] = useState(false)
     const [numberGen, setNumberGen] = useState(false)
     const [specialGen, setSpecialGen] = useState("_-")
@@ -114,29 +112,18 @@ const InfoGrid = (props) => {
     }
 
     const handleGeneration = () => {
-        const { password, entropy } = generatePassword(lengthGen, lowerGen, upperGen, numberGen, specialGen)
+        const { password, entropy } = generatePassword(lengthGen, true, upperGen, numberGen, specialGen)
         setPassword(password)
         setEntropyGen(Math.floor(entropy))
         console.log(Math.floor(entropy))
     }
 
     const handleShowPassword = () => {
-        if (passwordType == "text") {
+        if (passwordType === "text") {
             setPasswordType("password")
         } else {
             setPasswordType("text")
         }
-    }
-
-    var bars = [
-        { width: 40, color: '#dc3545' },
-        { width: 15, color: '#d5873d' },
-        { width: 15, color: '#f2d261' },
-        { width: 15, color: '#9baa4b' },
-        { width: 15, color: '#6fa053' }
-    ]
-    let wrapper = {
-        padding: '30px'
     }
 
     return (

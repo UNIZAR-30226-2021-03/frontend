@@ -3,9 +3,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 import { Button, Container, Grid } from '@material-ui/core';
@@ -213,7 +211,7 @@ const Home = () => {
                     return 0
                 }
             })
-        } else if (orderInfo == "date") {
+        } else if (orderInfo === "date") {
             data.sort((a, b) => {
                 let da = new Date(a.creation_date),
                     db = new Date(b.creation_date);
@@ -423,7 +421,6 @@ const Home = () => {
                                     direction='row'
                                     justify='flex-end'
                                     alignItems='center'
-                                    className={classes.info}
                                 >
                                     <Grid item xs={7}>
                                         <Typography

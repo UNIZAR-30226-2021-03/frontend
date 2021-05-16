@@ -3,7 +3,7 @@ import { NavbarItems } from './NavbarItems';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import AuthContext from '../../context'
-import { Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 //Navbar con menú para vista desde web browser móvil:
 //Fas fa-times y fa-bars iconos exportados desde fontawesome, ver index.html
@@ -29,43 +29,59 @@ const NavbarPrivate = (props) => {
   useEffect(() => {
     setNickname(getNickname())
     console.log(getNickname())
-  },[getNickname()])
+  }, [getNickname()])
   const mainLink = '/home'
 
   return (
     <>
       <nav className='navbar'>
+        <Grid container
+          direction="row"
+          alignItems="center"
+          justify="center"
 
-        <Link to={mainLink} className="navbar-logo">
-          <i className="fas fa-key navbar-logo-icon"></i>
-          <div className="navbar-logo-name">
-            KeyPaX
+        >
+
+          <Grid item xs={2}>
+            <Link to={mainLink} className="navbar-logo">
+              <i className="fas fa-key navbar-logo-icon"></i>
+              <div className="navbar-logo-name">
+                KeyPaX
           </div>
-        </Link>
+            </Link>
+          </Grid>
+          <Grid itemxs={2}>
+            <div className='menu-icon' onClick={handleClick}>
+              <i className={clicked ? 'fas fa-times' : 'fas fa-bars'} />
+            </div>
+          </Grid>
 
-        <div className='menu-icon' onClick={handleClick}>
-          <i className={clicked ? 'fas fa-times' : 'fas fa-bars'} />
-        </div>
+          <Grid item xs={2}>
+            <div className="navbar-logo navbar-logo-name">
+              Bienvenido {nickname}
+            </div>
+          </Grid>
 
-        <div className="navbar-logo navbar-logo-name">
-            Bienvenido {nickname}
-        </div>
+          <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
+            {NavbarItems.map((item, index) => {
+              if (item.private === true) {
+                return (
+                  <Grid item xs={2}>
+                    <li key={index}>
 
-        <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
-          {NavbarItems.map((item, index) => {
-            if (item.private === true) {
-              return (
-                <li key={index}>
-                  <Link className={item.cName} to={item.url} onClick={handleSignOut}>
-                    {item.title}
-                  </Link>
-                </li>
-              )
-            } else {
-              return (<></>)
-            }
-          })}
-        </ul>
+                      <Link className={item.cName} to={item.url} onClick={handleSignOut}>
+                        {item.title}
+                      </Link>
+
+                    </li>
+                  </Grid>
+                )
+              } else {
+                return (<></>)
+              }
+            })}
+          </ul>
+        </Grid>
       </nav>
     </>
   );

@@ -1,26 +1,12 @@
 //https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sticky-footer/StickyFooter.js
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: theme.spacing(3, 2),
-    marginTop: 'auto',
-    backgroundColor: 'rgb(30, 61, 88)',
-    color: 'rgb(232, 238, 241)'
-  },
-  link: {
-    color: 'rgb(232, 238, 241)'
-  },
-}));
-
 export default function StickyFooter() {
-  const classes = useStyles();
 
   return (
     <Container className="container" component="main" maxWidth="xl">

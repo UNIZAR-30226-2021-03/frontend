@@ -73,9 +73,7 @@ const LogIn = () => {
   const [errorPasswordConfirm, setErrorPasswordConfirm] = useState(false);
 
   const [failAuthEmail, setFailAuthEmail] = useState(false);
-
-  const [failAuthPassword, setFailAuthPassword] = useState(false);
-
+gt
   const [mail, setMail] = useState("");
 
   const [name, setName] = useState("");

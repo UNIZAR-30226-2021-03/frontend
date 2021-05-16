@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import AuthContext from '../../context'
 import { Grid, Button } from '@material-ui/core';
-import { BsFillCaretDownFill, BsFillCaretUpFill, BsClipboardData, BsFillEyeFill } from "react-icons/bs";
+import { BsFillCaretDownFill, BsClipboardData, BsFillEyeFill } from "react-icons/bs";
 import { deleteInfo, renameInfo } from '../../services/Info.service'
 import { makeStyles } from '@material-ui/core/styles';
 import InfoGrid from './InfoGrid';
