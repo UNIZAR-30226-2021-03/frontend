@@ -34,7 +34,7 @@ const InfoFile = (props) => {
     const file = props.file
 
     const onHandleUpload = async (e) => {
-        console.log(e)
+        console.log(e.target)
         const response = await uploadFile(getAccessToken(), category_id, _id, e.target.files[0])
         if (response.status === 400) {
 
