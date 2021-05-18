@@ -112,7 +112,7 @@ const Home = () => {
         async function loadCategoryList() {
             const response = await getCategoryList(getAccessToken())
             if (response.status === 401) {
-                signOutToken()
+                // TODO signOutToken()
             } else if (response.status === 403) {
 
             } else if (response.status === 500) {
@@ -134,7 +134,7 @@ const Home = () => {
             console.log("currCategory: ", currentCategory.name)
             const response = await getInfoList(getAccessToken(), currentCategory._id);
             if (response.status === 401) {
-                signOutToken()
+                // TODO signOutToken()
             } else if (response.status === 403) {
 
             } else if (response.status === 500) {
