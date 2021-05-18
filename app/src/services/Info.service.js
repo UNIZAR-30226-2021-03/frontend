@@ -2,6 +2,7 @@ import axios from 'axios'
 import Routes from './Routes.js'
 
 const createInfo = async (accessToken, name, username, password, url, description, category_id) => {
+    console.log("Info.service: acctoken: ", accessToken)
     try {
         const config = {
             headers: {
@@ -36,6 +37,8 @@ const createInfo = async (accessToken, name, username, password, url, descriptio
 }
 
 const deleteInfo = async (accessToken, category_id, info_id) => {
+    console.log("Info.service: acctoken: ", accessToken)
+
     try {
         const config = {
             headers: {
@@ -60,6 +63,8 @@ const deleteInfo = async (accessToken, category_id, info_id) => {
 }
 
 const renameInfo = async (accessToken, name, username, password, url, description, category_id, info_id) => {
+    console.log("Info.service: acctoken: ", accessToken)
+
     try {
         const config = {
             headers: {

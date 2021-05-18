@@ -62,19 +62,16 @@ const NavbarPrivate = (props) => {
             </div>
           </Grid>
 
+
           <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
             {NavbarItems.map((item, index) => {
               if (item.private === true) {
                 return (
-                  <Grid item xs={2}>
                     <li key={index}>
-
                       <Link className={item.cName} to={item.url} onClick={handleSignOut}>
                         {item.title}
                       </Link>
-
                     </li>
-                  </Grid>
                 )
               } else {
                 return (<></>)

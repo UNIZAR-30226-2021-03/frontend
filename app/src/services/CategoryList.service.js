@@ -8,6 +8,7 @@ const getCategoryList = async (accessToken) => {
                 accessToken
             }
         }
+        console.log("CategoryList.service: config: ", config)
         const response = await axios.get(Routes.URL_CATEGORY_LIST, config)
         console.log("--- CODE " + response.status + ": !")
         return {

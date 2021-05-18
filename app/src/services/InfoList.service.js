@@ -11,6 +11,7 @@ const getInfoList = async (accessToken, category_id) => {
                 category_id
             }
         }
+        console.log("InfoList.service: config: ", config)
         const response = await axios.get(Routes.URL_INFO_LIST, config)
         console.log("--- CODE " + response.status + ": !")
         return {

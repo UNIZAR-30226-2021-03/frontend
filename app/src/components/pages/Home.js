@@ -112,17 +112,20 @@ const Home = () => {
         async function loadCategoryList() {
             const response = await getCategoryList(getAccessToken())
             if (response.status === 401) {
+                console.log("initial loadCategoryList error 401")
                 // TODO signOutToken()
             } else if (response.status === 403) {
-
+                console.log("initial loadCategoryList error 403")
             } else if (response.status === 500) {
-
+                console.log("initial loadCategoryList error 500")
             } else if (response.status === 200) {
+                console.log("initial loadCategoryList 200!!!!")
                 setCategoryList(response.data)
                 if (response.data.length !== 0) {
                     setCurrentCategory({ name: response.data[0].name, _id: response.data[0]._id })
                 }
             } else {
+                console.log("initial loadCategoryList error NOT KNOWN ")
                 // TODO network error
             }
         }
@@ -135,16 +138,20 @@ const Home = () => {
             const response = await getInfoList(getAccessToken(), currentCategory._id);
             if (response.status === 401) {
                 // TODO signOutToken()
+                console.log("initial loadInfoList error 401")
             } else if (response.status === 403) {
-
+                console.log("initial loadInfoList error 403")
             } else if (response.status === 500) {
-
+                console.log("initial loadInfoList error 500")
             } else if (response.status === 200) {
+                console.log("initial loadInfoList 200!!")
                 const info = sortData(response.data)
                 setInfoList(info)
                 console.log(info)
             } else {
                 // TODO network error
+                console.log("initial loadInfoList error NOT KNOWN ")
+
             }
         }
         loadInfoList()
@@ -155,12 +162,13 @@ const Home = () => {
     const refreshCategory = async (action) => {
         const response = await getCategoryList(getAccessToken())
         if (response.status === 401) {
-
+            console.log("refresh CategoryList error 401")
         } else if (response.status === 403) {
-
+            console.log("refresh CategoryList error 403")
         } else if (response.status === 500) {
-
+            console.log("refresh CategoryList error 500")
         } else if (response.status === 200) {
+            console.log("refresh CategoryList 200!!")
             setCategoryList(response.data)
             if (action.type === "create") {
                 const category = response.data.find(category => category.name === action.name)
@@ -175,22 +183,26 @@ const Home = () => {
                 }
             }
         } else {
+            console.log("refresh CategoryList error NOT KNOWN")
+
             // TODO network error
         }
     }
     const refreshInfoList = async (orderInfo) => {
         const response = await getInfoList(getAccessToken(), currentCategory._id)
         if (response.status === 401) {
-
+            console.log("refresh InfoList error 401")
         } else if (response.status === 403) {
-
+            console.log("refresh InfoList error 403")
         } else if (response.status === 500) {
-
+            console.log("refresh InfoList error 500")
         } else if (response.status === 200) {
+            console.log("refresh InfoList 200!!")
             const info = sortData(response.data, orderInfo)
             setInfoList(info)
             console.log(info)
         } else {
+            console.log("refresh InfoList error NOT KNOWN")
             // TODO network error
         }
 

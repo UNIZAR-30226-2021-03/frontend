@@ -2,6 +2,7 @@ import axios from 'axios'
 import Routes from './Routes.js'
 
 const createCategory = async (accessToken, name) => {
+    console.log("Category.service: acctoken: ", accessToken)
     try {
         const config = {
             headers: {
@@ -24,6 +25,7 @@ const createCategory = async (accessToken, name) => {
 }
 
 const deleteCategory = async (accessToken, category_id) => {
+    console.log("Category.service: acctoken: ", accessToken)
     try {
         const config = {
             headers: {
@@ -47,6 +49,7 @@ const deleteCategory = async (accessToken, category_id) => {
 }
 
 const renameCategory = async (accessToken, name, category_id) => {
+    console.log("Category.service: acctoken: ", accessToken)
     try {
         const config = {
             headers: {
