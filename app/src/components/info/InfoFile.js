@@ -4,7 +4,7 @@ import { Container, Grid, Button } from '@material-ui/core';
 import { BsFileEarmarkArrowDown, BsFileEarmarkArrowUp } from "react-icons/bs";
 import { downloadFile, uploadFile, deleteFile } from '../../services/File.service'
 import { makeStyles } from '@material-ui/core/styles';
-import FileDownload from 'js-file-download';
+import fileDownload from 'js-file-download';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -34,7 +34,6 @@ const InfoFile = (props) => {
     const file = props.file
 
     const onHandleUpload = async (e) => {
-        console.log(e.target)
         const response = await uploadFile(getAccessToken(), category_id, _id, e.target.files[0])
         if (response.status === 400) {
 
@@ -62,7 +61,8 @@ const InfoFile = (props) => {
         } else if (response.status === 500) {
 
         } else if (response.status === 200) {
-            FileDownload(response.data, file.name)
+
+            fileDownload(response.data, file.name)
         } else {
             // TODO network error
         }

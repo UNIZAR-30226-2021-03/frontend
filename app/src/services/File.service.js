@@ -33,14 +33,17 @@ const downloadFile = async(accessToken,file_id) => {
     try{
         const config = {
             headers: {
-                accessToken
+                accessToken:accessToken,
+                
             },
             params: {
                 file_id
-            }
+            },
+            responseType: 'blob'
         }
         const response = await axios.get(Routes.URL_FILE,config)
         console.log("--- CODE " + response.status + ": !")
+        console.log(response)
         return {
             status: response.status,
             data: response.data
