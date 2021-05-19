@@ -17,9 +17,26 @@ const useStyles = makeStyles((theme) => ({
         width: '50px',
         height: '50px'
     },
-    info: {
-        backgroundColor: 'rgb(255, 255, 222)'
-    }
+    button: {
+        textTransform: "none",
+        fontSize: '20px',
+        padding: '8px 20px',
+        borderRadius: '3px',
+        outline: 'none',
+        cursor: 'pointer',
+        justifyContent: 'center',
+        alignItems: 'center',
+        transition: 'all 0.3s ease-out',
+        border: '1px solid rgb(30,61,88)',
+        backgroundColor: 'rgb(5, 125, 205)',
+        color: 'rgb(232, 238, 241)',
+        '&:hover': {
+            backgroundColor: 'transparent',
+            color: 'rgb(30,61,88)',
+            transition: 'all 0.3s ease-out',
+            border: '1px solid rgb(5, 125, 205)',
+        }
+    },
 }));
 
 const InfoFile = (props) => {
@@ -95,7 +112,7 @@ const InfoFile = (props) => {
                     alignItems='center'>
                     <Grid item>
                         <Button
-                            className={classes.file}
+                            className={classes.file, classes.button}
                             fullWidth={true}
                             variant="contained"
                             component="label"
@@ -125,7 +142,7 @@ const InfoFile = (props) => {
                             variant="contained"
                             component="label"
                             onClick={onHandleDownload}
-                            className={classes.file}>
+                            className={classes.file, classes.button}>
                             <BsFileEarmarkArrowDown className={classes.file_photo} />
                         </Button>
                     </Grid>
@@ -133,7 +150,7 @@ const InfoFile = (props) => {
                         {file.name}
                     </Grid>
                     <Grid item>
-                        <Button fullWidth={true} color="secondary" variant="contained" onClick={onHandleDeleteFile}> BORRAR</Button>
+                        <Button className={classes.button} fullWidth={true} color="secondary" variant="contained" onClick={onHandleDeleteFile}> BORRAR</Button>
                     </Grid>
                 </Grid>
             }

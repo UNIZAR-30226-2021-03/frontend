@@ -1,4 +1,4 @@
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
@@ -11,8 +11,35 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import { BsForwardFill, BsFillEyeFill } from "react-icons/bs"
 import { generatePassword } from '../../helpers/password.helper'
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+        textTransform: "none",
+        fontSize: '20px',
+        padding: '8px 20px',
+        borderRadius: '3px',
+        outline: 'none',
+        cursor: 'pointer',
+        justifyContent: 'center',
+        alignItems: 'center',
+        transition: 'all 0.3s ease-out',
+        border: '1px solid rgb(30,61,88)',
+        backgroundColor: 'rgb(5, 125, 205)',
+        color: 'rgb(232, 238, 241)',
+        '&:hover': {
+            backgroundColor: 'transparent',
+            color: 'rgb(30,61,88)',
+            transition: 'all 0.3s ease-out',
+            border: '1px solid rgb(5, 125, 205)',
+        }
+    },
+}));
+
 
 const InfoGrid = (props) => {
+
+    const classes = useStyles();
 
     const name = props.name
     const username = props.username
@@ -140,7 +167,7 @@ const InfoGrid = (props) => {
                     autoFocus
                     margin="none"
                     label="Nombre"
-                    variant="filled"
+                    variant="outlined"
                     required
                     fullWidth
                     size="medium"
@@ -157,7 +184,7 @@ const InfoGrid = (props) => {
                 <TextField
                     margin="none"
                     label="Usuario"
-                    variant="filled"
+                    variant="outlined"
                     required
                     fullWidth
                     size="medium"
@@ -173,7 +200,7 @@ const InfoGrid = (props) => {
                 <TextField
                     margin="none"
                     label="Contraseña"
-                    variant="filled"
+                    variant="outlined"
                     required
                     fullWidth
                     size="medium"
@@ -188,6 +215,7 @@ const InfoGrid = (props) => {
             </Grid>
             <Grid item xs={1}>
                 <Button
+                    className={classes.button}
                     onClick={handleShowPassword}
                     variant="contained"
                     size="large">
@@ -198,7 +226,7 @@ const InfoGrid = (props) => {
                 <TextField
                     margin="none"
                     label="URL"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     size="medium"
                     name="name"
@@ -215,7 +243,7 @@ const InfoGrid = (props) => {
                         <TextField
                             margin="none"
                             label="Descripción"
-                            variant="filled"
+                            variant="outlined"
                             multiline
                             rows={5}
                             fullWidth
@@ -244,7 +272,7 @@ const InfoGrid = (props) => {
                         <TextField
                             margin="none"
                             label="Descripción"
-                            variant="filled"
+                            variant="outlined"
                             multiline
                             rows={5}
                             fullWidth
@@ -335,6 +363,7 @@ const InfoGrid = (props) => {
                     </Grid>
                     <Grid item xs={1}>
                         <Button
+                            className={classes.button}
                             onClick={handleGeneration}
                             variant="contained"
                             size="large">

@@ -51,9 +51,13 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     form: {
-        padding: theme.spacing(5),
-        backgroundColor: 'rgb(255,255,255)',
+        
+       backgroundColor: 'rgb(255,255,255)',
         border: '2px solid rgb(232, 238, 241)',
+        
+        padding: theme.spacing(5),
+        /* backgroundColor: 'rgb(232,238,241)',
+        border: '2px solid rgb(5,125,205)', */
         borderRadius: '10px',
     }
 

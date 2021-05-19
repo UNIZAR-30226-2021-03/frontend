@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import AuthContext from '../../context'
 import { Grid, Button } from '@material-ui/core';
-import { BsFillCaretDownFill, BsClipboardData, BsFillEyeFill } from "react-icons/bs";
+import { BsFillCaretDownFill, BsFillCaretUpFill, BsClipboardData, BsFillEyeFill } from "react-icons/bs";
 import { deleteInfo, renameInfo } from '../../services/Info.service'
 import { makeStyles } from '@material-ui/core/styles';
 import InfoGrid from './InfoGrid';
@@ -10,8 +10,33 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 const useStyles = makeStyles((theme) => ({
     info: {
         padding: theme.spacing(1),
-        backgroundColor: 'rgb(255, 255, 222)'
-    }
+        backgroundColor: 'rgb(232,238,241)',
+        border: '2px solid rgb(5,125,205)',
+        borderRadius: '10px',
+    },
+    up: {
+        padding: theme.spacing(1),
+    },
+    button: {
+        textTransform: "none",
+        fontSize: '20px',
+        padding: '8px 20px',
+        borderRadius: '3px',
+        outline: 'none',
+        cursor: 'pointer',
+        justifyContent: 'center',
+        alignItems: 'center',
+        transition: 'all 0.3s ease-out',
+        border: '1px solid rgb(30,61,88)',
+        backgroundColor: 'rgb(5, 125, 205)',
+        color: 'rgb(232, 238, 241)',
+        '&:hover': {
+            backgroundColor: 'transparent',
+            color: 'rgb(30,61,88)',
+            transition: 'all 0.3s ease-out',
+            border: '1px solid rgb(5, 125, 205)',
+        }
+    },
 }));
 
 
@@ -140,6 +165,7 @@ const Info = (props) => {
                     </Grid>
                     <Grid item xs={1}>
                         <Button
+                            className={classes.button}
                             onClick={handleShowPassword}
                             variant="contained"
                             size="large">
@@ -149,6 +175,7 @@ const Info = (props) => {
                     <Grid item xs={1}>
                         <CopyToClipboard text={password}>
                             <Button
+                                className={classes.button}
                                 variant="contained"
                                 size="large">
                                 <BsClipboardData />
@@ -160,6 +187,7 @@ const Info = (props) => {
                     </Grid>
                     <Grid item xs={1}>
                         <Button
+                            className={classes.button}
                             onClick={() => setOpen(true)}
                             variant="contained"
                             size="large"
@@ -183,7 +211,7 @@ const Info = (props) => {
                     <Grid item xs={12}>
                         <Grid
                             container
-                            className={classes.info}
+                            className={classes.up}
                             //spacing={1}
                             direction='row'
                             justify='flex-end'
@@ -192,11 +220,12 @@ const Info = (props) => {
                             </Grid>
                             <Grid item xs={1}>
                                 <Button
+                                    className={classes.button}
                                     onClick={() => setOpen(false)}
                                     variant="contained"
                                     size="large"
                                 >
-                                    <BsFillCaretDownFill />
+                                    <BsFillCaretUpFill />
                                 </Button>
                             </Grid>
                         </Grid>
@@ -241,6 +270,7 @@ const Info = (props) => {
 
                         <Grid item xs={2}>
                             <Button
+                                className={classes.button}
                                 fullWidth={true}
                                 variant="contained"
                                 onClick={onHandleDelete}>
@@ -250,6 +280,7 @@ const Info = (props) => {
 
                         <Grid item xs={2}>
                             <Button
+                                className={classes.button}
                                 fullWidth={true}
                                 variant="contained"
                                 onClick={onHandleEdit}>

@@ -163,10 +163,7 @@ const LogIn = () => {
       } else if (response.status === 501) {
         console.log("--- ERROR " + response.status + ": !")
       } else if (response.status === 200) {
-        // TODO signup correcto
         setOpenVerify(true)
-        console.log('Redirecting to login...')
-        history.push('/login')
       } else {
         // TODO network erorr????
       }
@@ -277,8 +274,6 @@ const LogIn = () => {
             className={classes.submit}
             fullWidth
             onClick={handleSignUp}
-          // TODO submit????
-          //type="submit"
           >
             Sign up
             </Button>
@@ -294,12 +289,16 @@ const LogIn = () => {
         <DialogTitle id="alert-dialog-title">{"Verificar correo"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Se ha enviado un correo para verificar tu identidad. Se necesita la verificación antes de Iniciar Sesión.
+            Se ha enviado un correo para verificar a {mail} tu identidad. Se necesita la verificación antes de Iniciar Sesión.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { setOpenVerify(false) }} color="primary" autoFocus>
-            Agree
+          <Button onClick={() => { 
+              setOpenVerify(false) 
+              console.log('Redirecting to login...')
+              history.push('/login')
+            }} color="primary" autoFocus>
+            Aceptar
           </Button>
         </DialogActions>
       </Dialog>

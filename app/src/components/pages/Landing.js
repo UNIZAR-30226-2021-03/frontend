@@ -72,8 +72,8 @@ const Landing = () => {
                 Gestor de contraseñas seguro
                 </Typography>
             <Typography className={classes.description}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus. Molestie nunc non blandit massa. Mattis molestie a iaculis at erat. Dictum varius duis at consectetur lorem donec.
-                </Typography>
+                KeyPaX permite gestionar una colección de contraseñas de manera segura y remota, almacenar los nombres de usuario y claves de acceso a distintos servicios, además de otra información adicional como URLs y descripciones. Las contraseñas se organizan por categorı́as. Además, el sistema puede generar contraseñas robustas y personalizadas. 
+            </Typography>
         </Box>
     )
 }

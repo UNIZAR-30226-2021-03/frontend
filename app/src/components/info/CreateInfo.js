@@ -7,9 +7,32 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     info: {
+        
         padding: theme.spacing(1),
-        backgroundColor: 'rgb(255, 255, 222)'
-    }
+        backgroundColor: 'rgb(232,238,241)',
+        border: '2px solid rgb(5,125,205)',
+        borderRadius: '10px',
+    },
+    button: {
+        textTransform: "none",
+        fontSize: '20px',
+        padding: '8px 20px',
+        borderRadius: '3px',
+        outline: 'none',
+        cursor: 'pointer',
+        justifyContent: 'center',
+        alignItems: 'center',
+        transition: 'all 0.3s ease-out',
+        border: '1px solid rgb(30,61,88)',
+        backgroundColor: 'rgb(5, 125, 205)',
+        color: 'rgb(232, 238, 241)',
+        '&:hover': {
+            backgroundColor: 'transparent',
+            color: 'rgb(30,61,88)',
+            transition: 'all 0.3s ease-out',
+            border: '1px solid rgb(5, 125, 205)',
+        }
+    },
 }));
 
 
@@ -121,6 +144,7 @@ const CreateInfo = (props) => {
                 >
                     <Grid item xs={2}>
                         <Button
+                            className={classes.button}
                             fullWidth={true}
                             variant="contained"
                             onClick={() => { handleCancelNewInfo() }}>
@@ -129,6 +153,7 @@ const CreateInfo = (props) => {
                     </Grid>
                     <Grid item xs={2}>
                         <Button
+                            className={classes.button}
                             fullWidth={true}
                             variant="contained"
                             onClick={() => { handleCreateInfo() }}>

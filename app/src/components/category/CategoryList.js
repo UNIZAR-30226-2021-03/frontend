@@ -1,8 +1,34 @@
 import React from 'react'
+import { makeStyles } from '@material-ui/core/styles';
 import { Button, Container, Grid } from '@material-ui/core'
 import { BsPlus } from "react-icons/bs";
 
+const useStyles = makeStyles((theme) => ({
+    button: {
+        textTransform: "none",
+        fontSize: '20px',
+        padding: '8px 20px',
+        borderRadius: '3px',
+        outline: 'none',
+        cursor: 'pointer',
+        justifyContent: 'center',
+        alignItems: 'center',
+        transition: 'all 0.3s ease-out',
+        border: '1px solid rgb(30,61,88)',
+        backgroundColor: 'rgb(5, 125, 205)',
+        color: 'rgb(232, 238, 241)',
+        '&:hover': {
+            backgroundColor: 'transparent',
+            color: 'rgb(30,61,88)',
+            transition: 'all 0.3s ease-out',
+            border: '1px solid rgb(5, 125, 205)',
+        }
+    },
+}));
+
 const CategoryList = (props) => {
+
+    const classes = useStyles();
 
     // TODO mejor manera de pasar estos estados (atributo+setter)
     const setOpenNewCategory = props.setOpenNewCategory
@@ -31,6 +57,7 @@ const CategoryList = (props) => {
                         return (
                             <Grid item xs={12}>
                                 <Button
+                                    className={classes.button}
                                     variant="contained"
                                     fullWidth
                                     onClick={() => {
@@ -45,12 +72,13 @@ const CategoryList = (props) => {
                 }
                 <Grid item xs={12}>
                     <Button
+                        className={classes.button}
                         variant="contained"
                         fullWidth
                         onClick={() => {
                             setOpenNewCategory(true)
                         }}>
-                        <BsPlus/>
+                        <BsPlus />
                     </Button>
                 </Grid>
             </Grid>

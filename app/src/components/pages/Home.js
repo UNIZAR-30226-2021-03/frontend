@@ -74,17 +74,39 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgb(255, 255, 222)'
+        backgroundColor: 'rgb(232,238,241)',
+        border: '2px solid rgb(5,125,205)',
+        borderRadius: '10px',
     },
     info: {
         //padding: theme.spacing(3),
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgb(255, 255, 222)'
+        backgroundColor: 'rgb(232,238,241)'
     },
     margin: {
         margin: theme.spacing(1),
+    },
+    button: {
+        textTransform: "none",
+        fontSize: '20px',
+        padding: '8px 20px',
+        borderRadius: '3px',
+        outline: 'none',
+        cursor: 'pointer',
+        justifyContent: 'center',
+        alignItems: 'center',
+        transition: 'all 0.3s ease-out',
+        border: '1px solid rgb(30,61,88)',
+        backgroundColor: 'rgb(5, 125, 205)',
+        color: 'rgb(232, 238, 241)',
+        '&:hover': {
+            backgroundColor: 'transparent',
+            color: 'rgb(30,61,88)',
+            transition: 'all 0.3s ease-out',
+            border: '1px solid rgb(5, 125, 205)',
+        }
     },
 
 }));
@@ -274,6 +296,7 @@ const Home = () => {
                 boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
             },
         },
+
     }))(InputBase);
 
     return (
@@ -333,6 +356,7 @@ const Home = () => {
 
                                         <Grid item xs={1}>
                                             <Button
+                                                className={classes.button}
                                                 size="large"
                                                 /* fullWidth={true} */
                                                 variant="contained"
@@ -343,6 +367,7 @@ const Home = () => {
                                         <Grid item xs={1}>
 
                                             <Button
+                                                className={classes.button}
                                                 size="large"
                                                 /* fullWidth={true} */
                                                 variant="contained"
@@ -360,10 +385,11 @@ const Home = () => {
                                         alignItems="center">
                                         <Grid item xs={2}>
                                             <Button
+                                                className={classes.button}
                                                 size="large"
                                                 fullWidth={true} variant="contained"
                                                 onClick={() => { setOpenNewInfo(true) }}>
-                                                CREATE INFO
+                                                CREAR CONTRASEÑA
                                             </Button>
                                         </Grid>
                                         <Grid item xs={8}></Grid>
@@ -448,6 +474,7 @@ const Home = () => {
                                     </Grid>
                                     <Grid item xs={3}>
                                         <Button
+                                            className={classes.button}
                                             onClick={() => { setOpenNewCategory(true) }}
                                             variant="contained"
                                             size="large"

@@ -1,4 +1,4 @@
-npm install --save react-copy-to-clipboard
+npm install--save react - copy - to - clipboard
 
 import { BsClipboardData } from "react-icons/bs";
 import CopyToClipboard from 'react-copy-to-clipboard'
